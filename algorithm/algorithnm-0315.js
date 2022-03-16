@@ -153,3 +153,42 @@ password("1234", "1235"); // "비밀번호를 다시 확인해주세요."
 password("1234", "1234"); // "회원가입을 축하합니다."
 password("1234", 1234); // "회원가입을 축하합니다."
 password("aaaa", "AAAA"); // "회원가입을 축하합니다."
+
+// --------배열
+const fruits = ["사과", "바나나", "파인애플"];
+
+// fruits.push("사과")
+// fruits.push("바나나")
+// fruits.push("파인애플")
+
+fruits[0];
+fruits[1];
+fruits[2];
+const newFruits = [];
+newFruits.push(fruits[fruits.length - 1]);
+
+newFruits;
+
+/////// 알고리즘 오후
+const Obj = {
+    name: "철수",
+    age: 12,
+    school: {
+        name: "다람쥐 초등학교",
+    },
+    friends: ["영희", "훈이"],
+    dog: "뼐이",
+};
+let a = "age";
+
+Obj.name;
+Obj[a];
+
+Obj.age;
+Obj["age"];
+
+Obj.dog = "별이";
+delete Obj.age;
+
+Obj.school.teacher = "훈이";
+delete Obj.school;
