@@ -15,14 +15,35 @@ export default function QuizB() {
 
     function onChangeEmail(event) {
         setEmail(event.target.value);
+
+        if (email === "") {
+            setEmailError("이메일을 입력하여 주세요.");
+            setIsValid(false);
+        } else if (email.includes("@") === false) {
+            setEmailError("이메일이 올바르지 않습니다!! @가 없음!!");
+            setIsValid(false);
+        } else {
+            setEmailError("");
+        }
     }
 
     function onChangePassword(event) {
         setPassword(event.target.value);
+        if (password === "") {
+            setPasswordError("비밀번호를 입력하여 주세요.");
+        } else {
+            setPasswordError("");
+        }
     }
 
     function onChangePasswordCheck(event) {
         setPasswordCheck(event.target.value);
+
+        if (password !== passwordCheck) {
+            setPasswordError("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+        } else {
+            setPasswordError("");
+        }
     }
 
     function onClickSignup() {
@@ -31,7 +52,10 @@ export default function QuizB() {
         onChangePasswordCheck;
         setIsValid(true);
 
-        if (email.includes("@") === false) {
+        if (email === "") {
+            setEmailError("이메일을 입력하여 주세요.");
+            setIsValid(false);
+        } else if (email.includes("@") === false) {
             setEmailError("이메일이 올바르지 않습니다!! @가 없음!!");
             setIsValid(false);
         } else {
@@ -47,6 +71,7 @@ export default function QuizB() {
         } else {
             setPasswordError("");
         }
+
         if (isValid === true) {
             alert("회원가입을 축하드립니다.");
         }
@@ -59,17 +84,20 @@ export default function QuizB() {
                 <InputBox
                     type="text"
                     onChange={onChangeEmail}
+                    onKeyUp={onChangeEmail}
                     placeholder="이메일을 입력해 주세요."
                 />
                 <Error>{emailError}</Error>
                 <InputBox
                     type="password"
                     onChange={onChangePassword}
+                    onKeyUp={onChangePassword}
                     placeholder="비밀번호를 입력해 주세요."
                 />
                 <InputBox
                     type="password"
                     onChange={onChangePasswordCheck}
+                    onKeyUp={onChangePasswordCheck}
                     placeholder="비밀번호를 다시 입력해 주세요."
                 />
                 <Error>{passwordError}</Error>

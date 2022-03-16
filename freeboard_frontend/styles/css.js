@@ -39,7 +39,7 @@ export const Div1 = styled.div`
 
 export const Div2 = styled.div`
     width: 50%;
-    &:first-child {
+    &:first-of-type {
         padding-right: 24px;
     }
 `;
@@ -72,11 +72,11 @@ export const Div5 = styled.div`
         align-items: center;
     }
 
-    span:first-child {
+    & > span:first-of-type {
         margin-bottom: 16px;
     }
 
-    input:first-child {
+    input:first-of-type {
         width: 77px;
         height: 52px;
         appearance: none;
@@ -85,7 +85,7 @@ export const Div5 = styled.div`
         padding: 14px;
     }
 
-    input:nth-child(n + 2) {
+    & > input {
         margin-top: 30px;
     }
 `;
@@ -134,7 +134,7 @@ export const Div6 = styled.div`
     align-items: center;
     margin-right: 24px;
 
-    span:first-child {
+    span:first-of-type {
         font-size: 18px;
     }
 
@@ -154,12 +154,12 @@ export const DivRadio = styled.div`
         margin: 0px 14px 0px 22px;
     }
 
-    input:first-child {
+    input:first-of-type {
         margin-left: 0px;
     }
 `;
 
-export const Register = styled.div`
+export const Register = styled.button`
     background: #ffd600;
     width: 179px;
     height: 52px;
@@ -169,4 +169,11 @@ export const Register = styled.div`
     justify-content: center;
     align-items: center;
     margin: 80px auto;
+    cursor: pointer;
+`;
+
+export const Error = styled.div`
+    padding-top: 10px;
+    font-size: 14px;
+    color: red;
 `;
