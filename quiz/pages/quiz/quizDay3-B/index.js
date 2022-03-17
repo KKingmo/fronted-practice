@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Body, Error, Wrapper, H3, InputBox, Divide, SignupBtn } from "../../../styles/emotion.js";
-export default function QuizB() {
+export default function QuizDay3B() {
     // 이메일 입력창
     const [email, setEmail] = useState("");
     const [emailError, setEmailError] = useState("");
@@ -109,3 +109,10 @@ export default function QuizB() {
         </Body>
     );
 }
+
+// export default function QuizB() {
+
+// }
+// const asdf = () => {
+// }
+// export default asdf

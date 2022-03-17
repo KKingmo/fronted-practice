@@ -1,5 +1,5 @@
 import { useState } from "react";
-export default function QuizA() {
+export default function QuizDay3A() {
     // Quiz 1. 1-1------start
     function onClickBtn11() {
         let hello1 = "반갑습니다";
