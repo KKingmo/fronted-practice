@@ -43,7 +43,7 @@ export default function GraphqlMutationProduct() {
     const onChangeProductDetail = (event) => {
         setProductDetail(event.target.value);
     };
-    const onCahngeProductPrice = (event) => {
+    const onChangeProductPrice = (event) => {
         setProductPrice(parseInt(event.target.value));
     };
 
@@ -55,7 +55,7 @@ export default function GraphqlMutationProduct() {
             <br />
             상품내용: <input type="text" onChange={onChangeProductDetail} />
             <br />
-            상품가격: <input type="text" onChange={onCahngeProductPrice} />
+            상품가격: <input type="text" onChange={onChangeProductPrice} />
             <br />
             <button onClick={onClickSubmit}>상품 등록하기</button>
         </>

@@ -1,3 +1,4 @@
+import { useMutation, gql } from "@apollo/client";
 import {
     Wrapper,
     Container,
@@ -19,59 +20,89 @@ import {
 } from "../../../styles/css.js";
 import { useState } from "react";
 
-export default function AAAPage() {
-    const [writer, setWriter] = useState("");
-    const [password, setPassword] = useState("");
-    const [title, setTitle] = useState("");
-    const [contents, setContents] = useState("");
+const CREATE_BOARD = gql`
+    mutation createBoard($createBoardInput: CreateBoardInput!) {
+        createBoard(createBoardInput: $createBoardInput) {
+            _id
+            writer
+            title
+            contents
+        }
+    }
+`;
 
+const NewPage = () => {
+    const [callApi] = useMutation(CREATE_BOARD);
+
+    // 게시글 입력 내용
+    const [myWriter, setMyWriter] = useState("");
+    const [myPassword, setMyPassword] = useState("");
+    const [myTitle, setMyTitle] = useState("");
+    const [myContents, setMyContents] = useState("");
+
+    // 에러 메세지
     const [writerError, setWriterError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [titleError, setTitleError] = useState("");
     const [contentsError, setContentsError] = useState("");
 
     const onChangeWriter = (event) => {
-        setWriter(event.target.value);
+        setMyWriter(event.target.value);
         if (event.target.value !== "") {
             setWriterError("");
         }
     };
 
     const onChangePassword = (event) => {
-        setPassword(event.target.value);
+        setMyPassword(event.target.value);
         if (event.target.value !== "") {
             setPasswordError("");
         }
     };
 
     const onChangeTitle = (event) => {
-        setTitle(event.target.value);
+        setMyTitle(event.target.value);
         if (event.target.value !== "") {
             setTitleError("");
         }
     };
 
     const onChangeContents = (event) => {
-        setContents(event.target.value);
+        setMyContents(event.target.value);
         if (event.target.value !== "") {
             setContentsError("");
         }
     };
 
+    const callRestApi = async () => {
+        const result = await callApi({
+            variables: {
+                createBoardInput: {
+                    writer: myWriter,
+                    password: myPassword,
+                    title: myTitle,
+                    contents: myContents,
+                },
+            },
+        });
+        console.log(result.data.createBoard);
+    };
+
     const onClickSubmit = () => {
-        if (writer === "") {
+        if (myWriter === "") {
             setWriterError("작성자를 입력해주세요.");
         }
-        if (password === "") {
+        if (myPassword === "") {
             setPasswordError("비밀번호를 입력해주세요.");
         }
-        if (title === "") {
+        if (myTitle === "") {
             setTitleError("제목을 입력해주세요.");
         }
-        if (contents === "") {
+        if (myContents === "") {
             setContentsError("내용을 입력해주세요.");
         }
-        if (writer !== "" && password !== "" && title !== "" && contents !== "") {
+        if (myWriter !== "" && myPassword !== "" && myTitle !== "" && myContents !== "") {
+            callRestApi();
             alert("게시물 등록에 성공하였습니다!");
         }
     };
@@ -96,7 +127,7 @@ export default function AAAPage() {
                         <Div2>
                             <Span>비밀번호</Span>
                             <Input
-                                type="text"
+                                type="password"
                                 placeholder="비밀번호를 입력해주세요."
                                 onChange={onChangePassword}
                             />
@@ -170,20 +201,9 @@ export default function AAAPage() {
                                 <Span>메인 설정</Span>
                             </DivRadio>
                             <DivRadio>
-                                <input
-                                    type="radio"
-                                    name="main__setting"
-                                    id="radio__youtube"
-                                    class="main__setting__radio"
-                                    checked
-                                />
+                                <input type="radio" name="main__setting" id="radio__youtube" />
                                 유튜브
-                                <input
-                                    type="radio"
-                                    name="main__setting"
-                                    id="radio__photo"
-                                    class="main__setting__radio"
-                                />
+                                <input type="radio" name="main__setting" id="radio__photo" />
                                 사진
                             </DivRadio>
                         </Div3>
@@ -197,4 +217,6 @@ export default function AAAPage() {
             </Wrapper>
         </>
     );
-}
+};
+
+export default NewPage;
