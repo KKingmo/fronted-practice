@@ -314,7 +314,8 @@ function calculator( num1, num2, operator ) {
   calculator(10,5, '*')
   calculator(10,5, '/')
   calculator(10,5, 'a')
-  
+  // --------------------------
+ // -------------------------- 
   // 023. 숫자 더하기
   function sum( num ) {
     let result = 0;
@@ -326,7 +327,21 @@ function calculator( num1, num2, operator ) {
   
   sum(5)
   sum(3)
+// --------------------------
+  const sum = ( num ) => {
+    let count = 0
+    for(let i = 1; i <= num; i++) {
+      // count = count + i;
+      count += i;
+    }
+    return count;
+  }
   
+  sum( 5 );
+  sum( 3 );
+// i = 0 보아 i = 1 로 두면 반복횟수가 줄어 효율증가.
+// --------------------------
+// --------------------------
   // 024. 특정 문자열 세기
   function countLetter(str) {
     let count = 0;
@@ -341,7 +356,35 @@ function calculator( num1, num2, operator ) {
   countLetter("asdaaaqaff2")
   
   countLetter("asaaaaaaaaa2")
+// --------------------------
+  const countLetter = ( str ) => {
+    let count = 0;
+    str = str.toLowerCase();
+    
+    for( let i = 0; i < str.length; i++ ) {
+      if( str[i] === "a" ) {
+        count ++;
+      }
+    }
+    return count
+  }
   
+  countLetter( "I am from Korea ");
+ // --------------------------
+ const countLetter = ( str ) => {
+  let count = 0;
+  str = str.toLowerCase();
+  
+  for( let i = 0; i < str.length; i++ ) {
+    if( str[i] === "a" ) {
+      count ++;
+    }
+  }
+  return count
+}
+// --------------------------
+// --------------------------
+countLetter( "I am from Korea "); 
   // 025. 문자열 삽입
   function makerNumber( num ) {
     let str = 1
@@ -353,3 +396,249 @@ function calculator( num1, num2, operator ) {
   
   makerNumber(5)
   makerNumber(7)
+// --------------------------
+  const makeNumber = ( num ) => {
+    let answer = "";
+    
+    for(let i = 1; i <= num; i++) {
+      answer += i;
+      if( i !== num ) {
+        answer += "-";
+      }
+    }
+    return answer;
+  }
+  
+  makeNumber( 5 )
+// --------------------------
+// --------------------------
+  // 026. 홀수 문자열
+  const makeOdd = (num) => {
+    let result = "";
+    for( let i = 1; i <= num; i++ ) {
+      if( (i % 2) == 1 ) {
+        result = result + i 
+      } else if( (i % 2) == 0 ) {
+        result = result
+      }
+    }    
+    console.log(result)
+  }
+    
+  makeOdd(5)
+  makeOdd(7)
+// --------------------------
+  const makeOdd = ( num ) => {
+    let answer = "";
+    
+    for( let i = 1; i <= num; i++) {
+      if(i % 2 === 1) {
+        answer += i
+      }
+    }
+    console.log(answer)
+  }
+  
+  makeOdd(12)
+// --------------------------
+// --------------------------
+// 027. 가장 큰 수 찾기
+const bigNum = (str) => {
+  let max = 0
+  for( let i = 0; i < str.length; i++ ) {
+    if( Number(str[i]) >= max ) {
+  		max = Number(str[i])
+    }
+  }
+    console.log(max)
+}
+
+bigNum("12345")
+bigNum("87135")
+// --------------------------
+const bigNum = ( str ) => {
+  let biggest = Number(str[0])
+  // 불필요한 반복문을 줄이려면
+  // for안의 i는 1부터 시작해야한다.
+  // 0부터 시작하면 같은 값을 굳이 비교하기 때문
+  for(let i = 1; i < str.length; i++) {
+    if( Number(str[i]) > biggest ) {
+      console.log(str[i], biggest)
+      biggest = Number(str[i])
+    }
+  }
+  return biggest;
+}
+
+bigNum("12345")
+bigNum("871259")
+// --------------------------
+// --------------------------
+
+// **** 03.18.금. 알고리즘 수업. ****
+// break 원하는 구간에서 종료 시키기 반복문 끝냄.
+// continue 원하는 구간만 스킵하기 반목문 계속 이어짐.
+
+//   이름    |  특징              |   사용범위        | 문자열
+// for - in | 객체를 반복할 수 있다. |  문자열, 객체, 배열 | for( let key in object )
+// 예제 1.
+let str = "abc";
+
+for( let key in str ) {
+  console.log(key, str[key])
+}
+// 예제 2.
+let obj = {
+  name: "철수",
+  age: 12,
+}
+
+for( let aa in obj ) {
+  console.log(aa, obj[aa])
+}
+
+//   이름    |  특징                     |   사용범위   | 문자열
+// for - of | 각각의 요소들을 가져올 수 있다. |  문자열, 배열 | for( let key of object )
+// 단점 : 속도가 느리다. 비효율적.
+// 에제 1.
+let str = "abc"
+for( let data of str ) {
+  console.log(data)
+}
+// 에제 2.
+for ( let i = 0; i < str.length; i++ ) {
+  console.log(str[i])
+}
+
+//   이름    |  특징                |  사용범위   | 문자열
+// forEach  | 배열에만 사용할 수 있다. |   배열     | Array.forEach(function())
+// 예제 1.
+const arr = [1, 2, 3];
+arr.forEach( function(el) {
+  console.log(el)
+})
+// 예제 2. 화살표 함수
+const arr = [1, 2, 3];
+arr.forEach( el => {
+  console.log(el)
+})
+
+//   이름  |  특징                           |  사용범위    | 문자열
+// while  | 최초식, 조건식, 증감식이 분할되어 사용. |  for과 동일  | whild()
+// 예제 1.
+let count = 0; // 최초식
+while( count !== 5 ) { // 조건식
+  count ++;  // 증감식
+}
+console.log(count)
+// 데이터를 연산하는데 데이터가 어떠한 결과가 나올때까지 무조건 실행해야 함.
+// 근데 1번만에 나올 수도 1만번만에 나올 수도 있음.
+// 즉, 언제까지 반복문을 돌려야할지 모를때에
+// 결과가 나올때까지 반복문을 돌리기위해 사용한다.
+// * 주의사항 : 반복문이 중단되는 조건을 충족하지않으면 무한하게 반복한다.
+// 따라서 조건식을 매우 신중히 잘 작성해줘야한다.
+
+// --------------------------
+// --------------------------
+// 041. 조건문 실전 적용 - 점수에 따른 등급 
+const grade = ( score ) => {
+  console.log(score)
+  if( score > 100 || score < 0 ) {
+    return "잘못된 점수입니다."
+  } else if( score >= 90 ) {
+    return "A"
+  } else if( score >= 80 ) {
+    return "B"
+  } else if( score >= 70 ) {
+    return "C"
+  } else if( score >= 60 ) {
+    return "D"
+  } else {
+    return "F"
+  }
+}
+
+grade( 105 );
+grade( -10 );
+grade( 97 );
+grade( 86 );
+grade( 75 );
+grade( 66 );
+grade( 52 );
+// --------------------------
+// --------------------------
+// 043. 마이페이지
+const myShopping = [
+  { category: "과일", price: 12000　},
+  { category: "의류", price:10000　 },
+  { category: "의류", price: 20000　},
+  { category: "장난감", price: 9000 },
+  { category: "과일", price: 5000　 },
+  { category: "의류", price: 10000  },
+  { category: "과일", price: 8000　　},
+  { category: "의류", price: 7000　　},
+  { category: "장난감", price: 5000  },
+  { category: "의류", price: 10000　 },
+]
+
+const myPage = () => {
+let count = 0; // 구매 횟수
+let amount = 0; // 총 구매 금액
+let grade = ""; // 최종 등급
+
+// for( let data of myShopping ) {
+//   console.log(data)
+// }
+
+for( let i = 0; i < myShopping.length; i++ ) {
+  if( myShopping[i].category === "의류" ) {
+    count++;
+    amount += myShopping[i].price
+  }
+}
+console.log(count, amount)
+
+if( count >= 5 ) {
+  grade = "Gold"
+} else if( count >= 3 ) {
+  grade = "Silver"
+} else {
+  grade = "Bronze"
+}
+return `의류를 구매한 횟수는 총 ${count}회 금액은 ${amount}원이며 등급은 ${grade}입니다.`
+}
+
+myPage();
+// --------------------------
+const myPage = (cat) => {
+  let count = 0; // 구매 횟수
+  let amount = 0; // 총 구매 금액
+  let grade = ""; // 최종 등급
+  
+  // for( let data of myShopping ) {
+  //   console.log(data)
+  // }
+  
+  for( let i = 0; i < myShopping.length; i++ ) {
+    if( myShopping[i].category === cat ) {
+      count++;
+      amount += myShopping[i].price
+    }
+  }
+  console.log(count, amount)
+  
+  if( count >= 5 ) {
+    grade = "Gold"
+  } else if( count >= 3 ) {
+    grade = "Silver"
+  } else {
+    grade = "Bronze"
+  }
+  return `${cat}를 구매한 횟수는 총 ${count}회 금액은 ${amount}원이며 등급은 ${grade}입니다.`
+}
+
+myPage("의류");
+myPage("과일");
+myPage("장난감");
+// --------------------------
+// --------------------------

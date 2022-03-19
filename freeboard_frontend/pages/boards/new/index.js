@@ -1,14 +1,15 @@
 import { useMutation, gql } from "@apollo/client";
+import { useRouter } from "next/router";
 import {
     Wrapper,
     Container,
     Title,
-    Div1,
-    Div2,
-    Div3,
-    Div4,
-    Div5,
-    Div6,
+    ParentDiv,
+    ChildDiv1,
+    ChildDiv2,
+    ChildDiv3,
+    ChildDiv4,
+    ChildDiv5,
     Span,
     Yellow,
     Input,
@@ -27,18 +28,38 @@ const CREATE_BOARD = gql`
             writer
             title
             contents
+            youtubeUrl
+            images
+            boardAddress {
+                zipcode
+                address
+                addressDetail
+            }
+            createdAt
         }
     }
 `;
 
 const NewPage = () => {
+    const router = useRouter();
     const [callApi] = useMutation(CREATE_BOARD);
 
     // 게시글 입력 내용
-    const [myWriter, setMyWriter] = useState("");
-    const [myPassword, setMyPassword] = useState("");
-    const [myTitle, setMyTitle] = useState("");
-    const [myContents, setMyContents] = useState("");
+    const [writer, setWriter] = useState("오창모");
+    const [password, setPassword] = useState("1234");
+    const [title, setTitle] = useState("게시글 제목입니다.");
+    const [contents, setContents] = useState(
+        "가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하"
+    );
+    const [youtubeUrl, setYoutubeUrl] = useState("https://youtu.be/yLZMeesKbJo");
+    const [zipcode, setZipcode] = useState("07250");
+    const [address, setAddress] = useState(
+        "서울특별시 영등포구 양산로 200 (영등포동5가, 영등포시장역)"
+    );
+    const [addressDetail, setAddressDetail] = useState("영등포 타임스퀘어 2층");
+    const [images, setImages] = useState(
+        "https://cdn.pixabay.com/photo/2015/11/22/19/04/crowd-1056764_1280.jpg"
+    ); // 이미지 청부하는 기능 필요
 
     // 에러 메세지
     const [writerError, setWriterError] = useState("");
@@ -47,61 +68,86 @@ const NewPage = () => {
     const [contentsError, setContentsError] = useState("");
 
     const onChangeWriter = (event) => {
-        setMyWriter(event.target.value);
+        setWriter(event.target.value);
         if (event.target.value !== "") {
             setWriterError("");
         }
     };
 
     const onChangePassword = (event) => {
-        setMyPassword(event.target.value);
+        setPassword(event.target.value);
         if (event.target.value !== "") {
             setPasswordError("");
         }
     };
 
     const onChangeTitle = (event) => {
-        setMyTitle(event.target.value);
+        setTitle(event.target.value);
         if (event.target.value !== "") {
             setTitleError("");
         }
     };
 
     const onChangeContents = (event) => {
-        setMyContents(event.target.value);
+        setContents(event.target.value);
         if (event.target.value !== "") {
             setContentsError("");
         }
     };
 
+    const onChangeZipcode = (event) => {
+        setZipcode(event.target.value);
+    };
+    const onChangeAddress = (event) => {
+        setAddress(event.target.value);
+    };
+    const onChangeYoutubeUrl = (event) => {
+        setYoutubeUrl(event.target.value);
+    };
+    const onChangeAddressDetail = (event) => {
+        setAddressDetail(event.target.value);
+    };
+
     const callRestApi = async () => {
-        const result = await callApi({
-            variables: {
-                createBoardInput: {
-                    writer: myWriter,
-                    password: myPassword,
-                    title: myTitle,
-                    contents: myContents,
+        try {
+            const result = await callApi({
+                variables: {
+                    createBoardInput: {
+                        writer: writer,
+                        password: password,
+                        title: title,
+                        contents: contents,
+                        youtubeUrl: youtubeUrl,
+                        boardAddress: {
+                            zipcode: zipcode,
+                            address: address,
+                            addressDetail: addressDetail,
+                        },
+                        images: [images],
+                    },
                 },
-            },
-        });
-        console.log(result.data.createBoard);
+            });
+            console.log(result);
+            router.push(`/boards/${result.data.createBoard._id}`);
+        } catch (error) {
+            alert(error.message);
+        }
     };
 
     const onClickSubmit = () => {
-        if (myWriter === "") {
+        if (writer === "") {
             setWriterError("작성자를 입력해주세요.");
         }
-        if (myPassword === "") {
+        if (password === "") {
             setPasswordError("비밀번호를 입력해주세요.");
         }
-        if (myTitle === "") {
+        if (title === "") {
             setTitleError("제목을 입력해주세요.");
         }
-        if (myContents === "") {
+        if (contents === "") {
             setContentsError("내용을 입력해주세요.");
         }
-        if (myWriter !== "" && myPassword !== "" && myTitle !== "" && myContents !== "") {
+        if (writer !== "" && password !== "" && title !== "" && contents !== "") {
             callRestApi();
             alert("게시물 등록에 성공하였습니다!");
         }
@@ -112,8 +158,8 @@ const NewPage = () => {
             <Wrapper>
                 <Container>
                     <Title>게시물 등록</Title>
-                    <Div1>
-                        <Div2>
+                    <ParentDiv>
+                        <ChildDiv1>
                             <Span>
                                 작성자 <Yellow>*</Yellow>
                             </Span>
@@ -123,8 +169,8 @@ const NewPage = () => {
                                 onChange={onChangeWriter}
                             />
                             <Error>{writerError}</Error>
-                        </Div2>
-                        <Div2>
+                        </ChildDiv1>
+                        <ChildDiv1>
                             <Span>비밀번호</Span>
                             <Input
                                 type="password"
@@ -132,10 +178,10 @@ const NewPage = () => {
                                 onChange={onChangePassword}
                             />
                             <Error>{passwordError}</Error>
-                        </Div2>
-                    </Div1>
-                    <Div1>
-                        <Div3>
+                        </ChildDiv1>
+                    </ParentDiv>
+                    <ParentDiv>
+                        <ChildDiv2>
                             <Span>제목</Span>
                             <Input
                                 type="text"
@@ -143,10 +189,10 @@ const NewPage = () => {
                                 onChange={onChangeTitle}
                             />
                             <Error>{titleError}</Error>
-                        </Div3>
-                    </Div1>
-                    <Div1>
-                        <Div4>
+                        </ChildDiv2>
+                    </ParentDiv>
+                    <ParentDiv>
+                        <ChildDiv3>
                             <Span>내용</Span>
                             <textarea
                                 type="text"
@@ -154,49 +200,57 @@ const NewPage = () => {
                                 onChange={onChangeContents}
                             />
                             <Error>{contentsError}</Error>
-                        </Div4>
-                    </Div1>
-                    <Div1>
-                        <Div5>
+                        </ChildDiv3>
+                    </ParentDiv>
+                    <ParentDiv>
+                        <ChildDiv4>
                             <Span>주소</Span>
                             <div>
-                                <input type="text" placeholder="07250" />
+                                <input
+                                    type="text"
+                                    placeholder="우편번호"
+                                    onChange={onChangeZipcode}
+                                />
                                 <Search>우편번호 검색</Search>
                             </div>
-                            <Input type="text"></Input>
-                            <Input type="text"></Input>
-                        </Div5>
-                    </Div1>
-                    <Div1>
-                        <Div3>
+                            <Input type="text" onChange={onChangeAddress}></Input>
+                            <Input type="text" onChange={onChangeAddressDetail}></Input>
+                        </ChildDiv4>
+                    </ParentDiv>
+                    <ParentDiv>
+                        <ChildDiv2>
                             <Span>유튜브</Span>
-                            <Input type="text" placeholder="링크를 복사해주세요." />
-                        </Div3>
-                    </Div1>
+                            <Input
+                                type="text"
+                                placeholder="링크를 복사해주세요."
+                                onChange={onChangeYoutubeUrl}
+                            />
+                        </ChildDiv2>
+                    </ParentDiv>
 
-                    <Div1>
+                    <ParentDiv>
                         <AttachPhoto>
                             <Span>사진첨부</Span>
                         </AttachPhoto>
-                    </Div1>
-                    <Div1>
+                    </ParentDiv>
+                    <ParentDiv>
                         <AttachPhoto>
-                            <Div6>
+                            <ChildDiv5>
                                 <Span>+</Span>
                                 <Span>Upload</Span>
-                            </Div6>
-                            <Div6>
+                            </ChildDiv5>
+                            <ChildDiv5>
                                 <Span>+</Span>
                                 <Span>Upload</Span>
-                            </Div6>
-                            <Div6>
+                            </ChildDiv5>
+                            <ChildDiv5>
                                 <Span>+</Span>
                                 <Span>Upload</Span>
-                            </Div6>
+                            </ChildDiv5>
                         </AttachPhoto>
-                    </Div1>
-                    <Div1>
-                        <Div3>
+                    </ParentDiv>
+                    <ParentDiv>
+                        <ChildDiv2>
                             <DivRadio>
                                 <Span>메인 설정</Span>
                             </DivRadio>
@@ -206,13 +260,13 @@ const NewPage = () => {
                                 <input type="radio" name="main__setting" id="radio__photo" />
                                 사진
                             </DivRadio>
-                        </Div3>
-                    </Div1>
-                    <Div1>
+                        </ChildDiv2>
+                    </ParentDiv>
+                    <ParentDiv>
                         <Register>
                             <Span onClick={onClickSubmit}>등록하기</Span>
                         </Register>
-                    </Div1>
+                    </ParentDiv>
                 </Container>
             </Wrapper>
         </>

@@ -1,3 +1,5 @@
+/** @jsxImportSource @emotion/react */
+import { jsx } from "@emotion/react";
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
@@ -5,9 +7,6 @@ export const Wrapper = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
 `;
 
 export const Container = styled.div`
@@ -31,28 +30,25 @@ export const Yellow = styled.span`
     color: #ffd600;
 `;
 
-export const Div1 = styled.div`
+export const ParentDiv = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
 `;
 
-export const Div2 = styled.div`
+export const ChildDiv1 = styled.div`
     width: 50%;
     &:first-of-type {
         padding-right: 24px;
     }
 `;
 
-export const Div3 = styled.div`
+export const ChildDiv2 = styled.div`
     width: 100%;
     padding-top: 40px;
 `;
 
-export const Div4 = styled.div`
-    width: 100%;
-    padding-top: 40px;
-
+export const ChildDiv3 = styled(ChildDiv2)`
     textarea {
         width: 100%;
         height: 480px;
@@ -61,7 +57,7 @@ export const Div4 = styled.div`
     }
 `;
 
-export const Div5 = styled.div`
+export const ChildDiv4 = styled.div`
     width: 100%;
     padding-top: 16px;
 
@@ -92,7 +88,6 @@ export const Div5 = styled.div`
 
 export const Span = styled.span`
     width: 100%;
-    font-size: 16px;
     line-height: 24px;
     display: block;
 `;
@@ -105,7 +100,6 @@ export const Input = styled.input`
 `;
 
 export const Search = styled.span`
-    font-size: 16px;
     color: #ffffff;
     background: #000000;
     line-height: 52px;
@@ -124,7 +118,7 @@ export const AttachPhoto = styled.div`
     }
 `;
 
-export const Div6 = styled.div`
+export const ChildDiv5 = styled.div`
     width: 78px;
     height: 78px;
     background: #bdbdbd;
