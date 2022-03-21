@@ -18,7 +18,7 @@ import {
     DivRadio,
     Register,
     Error,
-} from "../../../styles/css.js";
+} from "../../../styles/boardsNew";
 import { useState } from "react";
 
 const CREATE_BOARD = gql`
@@ -51,12 +51,12 @@ const NewPage = () => {
     const [contents, setContents] = useState(
         "가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하"
     );
-    const [youtubeUrl, setYoutubeUrl] = useState("https://youtu.be/yLZMeesKbJo");
+    const [youtubeUrl, setYoutubeUrl] = useState("yLZMeesKbJo");
     const [zipcode, setZipcode] = useState("07250");
-    const [address, setAddress] = useState(
-        "서울특별시 영등포구 양산로 200 (영등포동5가, 영등포시장역)"
+    const [address, setAddress] = useState("서울특별시 영등포구 양산로 200");
+    const [addressDetail, setAddressDetail] = useState(
+        "(영등포동5가, 영등포시장역) 영등포 타임스퀘어 2층"
     );
-    const [addressDetail, setAddressDetail] = useState("영등포 타임스퀘어 2층");
     const [images, setImages] = useState(
         "https://cdn.pixabay.com/photo/2015/11/22/19/04/crowd-1056764_1280.jpg"
     ); // 이미지 청부하는 기능 필요
