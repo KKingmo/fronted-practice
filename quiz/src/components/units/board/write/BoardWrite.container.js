@@ -23,7 +23,7 @@ export default function BoardWrite() {
             console.log(result.data.createBoard.message);
             alert("게시글 등록에 성공했어요!");
             alert("상세 페이지로 이동해 볼까요?!");
-            router.push(`/quiz/quizDay6/DynamicBoardRead/${result.data.createBoard.number}`);
+            router.push(`/quiz/quiz2-1/DynamicBoardRead/${result.data.createBoard.number}`);
         } catch (error) {
             alert(error.message);
         }
