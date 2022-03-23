@@ -13,8 +13,8 @@ export default function Home() {
             <main className={styles.main}>
                 <h1 className={styles.title}>
                     <br />
-                    <a href="http://localhost:3000/quiz/quiz2-highLevel">
-                        2주차-고난도 Quiz! 주소는 여기입니다.
+                    <a href="http://localhost:3000/quiz/quiz2-3/new">
+                        2주차-3 Quiz! 주소는 여기입니다.
                     </a>
                 </h1>
             </main>

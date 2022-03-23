@@ -1,11 +1,11 @@
-export default function AAAPage2() {
-    // 여기는 자바스크립트 쓰는 곳
+export default function AAAPage() {
 
-    return (
-        <div>
-            안녕하세요 bbb index.js 입니다.
-            <br />
-            <input type="text" />
-        </div>
-    );
+    // 여기는 자바스크립트 쓰는곳
+
+  return (
+    <div>
+        안녕하세요!!!
+        <input type="text"/>
+    </div>
+  )
 }

@@ -1,21 +1,14 @@
-import { MyTitle, MyEmail, MyLabel } from "../../styles/emotion";
+import { MyTitle, MyEmail } from '../../styles/emotion'
 
 export default function AAAPage() {
-    return (
-        <MyTitle>
-            로그인
-            <MyLabel>아이디</MyLabel>
-            <MyEmail type="text" />
-            <MyLabel>비밀번호</MyLabel>
-            <MyEmail type="text" />
-        </MyTitle>
-    );
 
-    // return (
-    //     <MyTitle>
-    //         로그인
-    //         <MyEmail type="text" />
-    //         <img src="/aaa/lotto.png" />
-    //     </MyTitle>
-    // );
+    // 여기는 자바스크립트 쓰는곳
+
+  return (
+    <MyTitle>
+        안녕하세요!!!
+        <MyEmail type="text"/>
+        <img src="/aaa/lotto.png"/>
+    </MyTitle>
+  )
 }

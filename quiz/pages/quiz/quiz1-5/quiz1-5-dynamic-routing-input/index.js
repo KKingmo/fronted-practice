@@ -35,7 +35,7 @@ const QuizDay5 = () => {
                 },
             });
             console.log(result.data.createProduct._id);
-            router.push(`/quiz/quizDay5/${result.data.createProduct._id}`);
+            router.push(`/quiz/quiz1-5/${result.data.createProduct._id}`);
         } catch (error) {
             console.log(error.message);
         }

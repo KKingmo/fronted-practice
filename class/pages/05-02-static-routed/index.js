@@ -1,5 +1,8 @@
-const StaticRoutedPage = () => {
-    return <div>페이지 이동이 완료되었습니다!!!</div>;
-};
+export default function StaticRoutedPage(){
 
-export default StaticRoutedPage;
+
+    return (
+        <div>페이지 이동이 완료되었습니다!!!</div>
+    )
+
+}
