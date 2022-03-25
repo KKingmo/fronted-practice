@@ -180,5 +180,6 @@ export const BoardFooterButton = styled.button`
     font-weight: 500;
     text-align: center;
     margin: 0 12px;
+    cursor: pointer;
 `;
 // BoardFooter ----- end

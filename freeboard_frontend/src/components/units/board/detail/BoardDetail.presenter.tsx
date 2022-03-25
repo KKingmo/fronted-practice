@@ -1,11 +1,12 @@
-import * as S from "./BoardRead.styles";
+import * as S from "./BoardDetail.styles";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import LinkIcon from "@material-ui/icons/Link";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import ThumbDownOutlinedIcon from "@material-ui/icons/ThumbDownOutlined";
+import { IBoardDetailUIProps } from "./BoardDetail.types";
 
-export default function BoardReadUI(props) {
+export default function BoardDetailUI(props: IBoardDetailUIProps) {
     return (
         <>
             <S.Wrapper>
@@ -99,9 +100,15 @@ export default function BoardReadUI(props) {
                 </S.Container>
 
                 <S.BoardFooter>
-                    <S.BoardFooterButton>목록으로</S.BoardFooterButton>
-                    <S.BoardFooterButton>수정하기</S.BoardFooterButton>
-                    <S.BoardFooterButton>삭제하기</S.BoardFooterButton>
+                    <S.BoardFooterButton onClick={props.onClickMoveToBoardList}>
+                        목록으로
+                    </S.BoardFooterButton>
+                    <S.BoardFooterButton onClick={props.onClickMoveToBoardEdit}>
+                        수정하기
+                    </S.BoardFooterButton>
+                    <S.BoardFooterButton onClick={props.onClickDelete}>
+                        삭제하기
+                    </S.BoardFooterButton>
                 </S.BoardFooter>
                 {/* <div>{data ? data.fetchBoard.boardAddress.zipcode : "loading..."}</div>
             <div>{data ? data.fetchBoard.boardAddress.address : "loading..."}</div>

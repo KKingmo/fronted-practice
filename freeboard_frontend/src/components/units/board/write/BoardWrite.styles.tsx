@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { jsx } from "@emotion/react";
 import styled from "@emotion/styled";
+import { IRegisterButtonProps } from "./BoardWrite.types";
 
 export const Wrapper = styled.div`
     display: flex;
@@ -154,7 +155,7 @@ export const DivRadio = styled.div`
 `;
 
 export const Register = styled.button`
-    background: #ffd600;
+    background-color: ${(props: IRegisterButtonProps) => (props.isActive ? "#ffd600" : "#bdbdbd")};
     width: 179px;
     height: 52px;
     text-align: center;
