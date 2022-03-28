@@ -14,7 +14,9 @@ export default function BoardListUI(props: IBoardListUIProps) {
       </S.Row>
       {props.data?.fetchBoards.map((el, index) => (
         <S.Row key={el._id}>
-          <S.ColumnBasic>{props.data.fetchBoards.length - index}</S.ColumnBasic>
+          <S.ColumnBasic>
+            {Number(props.data?.fetchBoards.length) - index}
+          </S.ColumnBasic>
           {/* <input type="text" id="bbb" onClick={props.onClickMoveToBoardDetail}/> */}
           <S.ColumnTitle id={el._id} onClick={props.onClickMoveToBoardDetail}>
             {el.title}

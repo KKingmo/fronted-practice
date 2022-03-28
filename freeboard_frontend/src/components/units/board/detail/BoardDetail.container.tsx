@@ -1,70 +1,108 @@
 import BoardDetailUI from "./BoardDetail.presenter";
 import { useRouter } from "next/router";
 import { useQuery, useMutation } from "@apollo/client";
-import { useState } from "react";
-import { FETCH_BOARD, LIKE_BOARD, DISLIKE_BOARD, DELETE_BOARD } from "./BoardDetail.queries";
+import {
+  FETCH_BOARD,
+  LIKE_BOARD,
+  DISLIKE_BOARD,
+  DELETE_BOARD,
+} from "./BoardDetail.queries";
+import {
+  IMutation,
+  IMutationDeleteBoardArgs,
+  IMutationLikeBoardArgs,
+  IMutationDislikeBoardArgs,
+  IQuery,
+  IQueryFetchBoardArgs,
+} from "../../../../commons/types/generated/types";
 
 export default function BoardRead() {
-    const [likeCount, setLikeCount] = useState();
-    const [dislikeCount, setDislikeCount] = useState();
+  const router = useRouter();
 
-    const router = useRouter();
-    const [likeBoard] = useMutation(LIKE_BOARD);
-    const [dislikeBoard] = useMutation(DISLIKE_BOARD);
-    const [deleteBoard] = useMutation(DELETE_BOARD);
-    const { data } = useQuery(FETCH_BOARD, {
-        variables: { boardId: router.query.boardId },
+  // deleteBoard useMutation
+  const [deleteBoard] = useMutation<
+    Pick<IMutation, "deleteBoard">,
+    IMutationDeleteBoardArgs
+  >(DELETE_BOARD);
+
+  // likeBoard useMutation
+  const [likeBoard] = useMutation<
+    Pick<IMutation, "likeBoard">,
+    IMutationLikeBoardArgs
+  >(LIKE_BOARD);
+
+  // likeBoard useMutation
+  const [dislikeBoard] = useMutation<
+    Pick<IMutation, "dislikeBoard">,
+    IMutationDislikeBoardArgs
+  >(DISLIKE_BOARD);
+
+  // FetchBoard useQuery
+  const { data } = useQuery<Pick<IQuery, "fetchBoard">, IQueryFetchBoardArgs>(
+    FETCH_BOARD,
+    {
+      variables: { boardId: String(router.query.boardId) },
+    }
+  );
+
+  // 게시쿨 목록 클릭
+  const onClickMoveToBoardList = () => {
+    router.push("/boards");
+  };
+
+  // 수정하기 클릭
+  const onClickMoveToBoardEdit = () => {
+    router.push(`/boards/${router.query.boardId}/edit`);
+  };
+
+  // 좋아요 클릭
+  const onClickLike = () => {
+    likeBoard({
+      variables: {
+        boardId: String(router.query.boardId),
+      },
+      refetchQueries: [
+        {
+          query: FETCH_BOARD,
+          variables: { boardId: String(router.query.boardId) },
+        },
+      ],
     });
+  };
 
-    // 게시쿨 목록 클릭
-    const onClickMoveToBoardList = () => {
-        router.push("/boards");
-    };
+  // 싫어요 클릭
+  const onClickDislike = () => {
+    dislikeBoard({
+      variables: {
+        boardId: String(router.query.boardId),
+      },
+      refetchQueries: [
+        {
+          query: FETCH_BOARD,
+          variables: { boardId: String(router.query.boardId) },
+        },
+      ],
+    });
+  };
 
-    // 수정하기 클릭
-    const onClickMoveToBoardEdit = () => {
-        router.push(`/boards/${router.query.boardId}/edit`);
-    };
+  // 삭제하기 클릭
+  const onClickDelete = () => {
+    deleteBoard({
+      variables: { boardId: String(router.query.boardId) },
+      refetchQueries: [{ query: FETCH_BOARD }],
+    });
+    alert("게시물을 삭제하였습니다.");
+    router.push("/boards");
+  };
 
-    // 좋아요 클릭
-    const onClickLike = async () => {
-        const resultLikeCount = await likeBoard({
-            variables: {
-                boardId: router.query.boardId,
-            },
-        });
-        setLikeCount(resultLikeCount.data.likeBoard);
-    };
-
-    // 싫어요 클릭
-    const onClickDislike = async () => {
-        const resultDislikeCount = await dislikeBoard({
-            variables: {
-                boardId: router.query.boardId,
-            },
-        });
-        setDislikeCount(resultDislikeCount.data.dislikeBoard);
-    };
-
-    // 삭제하기 클릭
-    const onClickDelete = () => {
-        deleteBoard({
-            variables: { boardId: router.query.boardId },
-            refetchQueries: [{ query: FETCH_BOARD }],
-        });
-        alert("게시물을 삭제하였습니다.");
-        router.push("/boards");
-    };
-    return (
-        <BoardDetailUI
-            data={data}
-            onClickLike={onClickLike}
-            onClickDislike={onClickDislike}
-            onClickMoveToBoardList={onClickMoveToBoardList}
-            onClickMoveToBoardEdit={onClickMoveToBoardEdit}
-            onClickDelete={onClickDelete}
-            likeCount={likeCount}
-            dislikeCount={dislikeCount}
-        />
-    );
+  return (
+    <BoardDetailUI
+      data={data}
+      onClickMoveToBoardList={onClickMoveToBoardList}
+      onClickMoveToBoardEdit={onClickMoveToBoardEdit}
+      onClickDelete={onClickDelete}
+      onClickLike={onClickLike}
+      onClickDislike={onClickDislike}
+    />
+  );
 }
