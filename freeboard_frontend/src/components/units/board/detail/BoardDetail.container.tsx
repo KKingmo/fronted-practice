@@ -1,4 +1,5 @@
 import BoardDetailUI from "./BoardDetail.presenter";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { useQuery, useMutation } from "@apollo/client";
 import {
@@ -15,9 +16,12 @@ import {
   IQuery,
   IQueryFetchBoardArgs,
 } from "../../../../commons/types/generated/types";
+import { success } from "../../../../commons/libraries/utils";
 
 export default function BoardRead() {
   const router = useRouter();
+  const [likeCount, setLikeCount] = useState();
+  const [dislikeCount, setDislikeCount] = useState();
 
   // deleteBoard useMutation
   const [deleteBoard] = useMutation<
@@ -56,33 +60,23 @@ export default function BoardRead() {
   };
 
   // 좋아요 클릭
-  const onClickLike = () => {
-    likeBoard({
+  const onClickLike = async () => {
+    const resultLikeCount = await likeBoard({
       variables: {
         boardId: String(router.query.boardId),
       },
-      refetchQueries: [
-        {
-          query: FETCH_BOARD,
-          variables: { boardId: String(router.query.boardId) },
-        },
-      ],
     });
+    setLikeCount(resultLikeCount.data.likeBoard);
   };
 
   // 싫어요 클릭
-  const onClickDislike = () => {
-    dislikeBoard({
+  const onClickDislike = async () => {
+    const resultDislikeCount = await dislikeBoard({
       variables: {
         boardId: String(router.query.boardId),
       },
-      refetchQueries: [
-        {
-          query: FETCH_BOARD,
-          variables: { boardId: String(router.query.boardId) },
-        },
-      ],
     });
+    setDislikeCount(resultDislikeCount.data.dislikeBoard);
   };
 
   // 삭제하기 클릭
@@ -91,13 +85,15 @@ export default function BoardRead() {
       variables: { boardId: String(router.query.boardId) },
       refetchQueries: [{ query: FETCH_BOARD }],
     });
-    alert("게시물을 삭제하였습니다.");
+    success("게시물을 삭제하였습니다.");
     router.push("/boards");
   };
 
   return (
     <BoardDetailUI
       data={data}
+      likeCount={likeCount}
+      dislikeCount={dislikeCount}
       onClickMoveToBoardList={onClickMoveToBoardList}
       onClickMoveToBoardEdit={onClickMoveToBoardEdit}
       onClickDelete={onClickDelete}

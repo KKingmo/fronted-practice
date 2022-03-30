@@ -1,3 +1,4 @@
+import "antd/dist/antd.css";
 import "../styles/globals.css"; // 나중에 emotion으로 변경.
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { globalStyles } from "../styles/reset";

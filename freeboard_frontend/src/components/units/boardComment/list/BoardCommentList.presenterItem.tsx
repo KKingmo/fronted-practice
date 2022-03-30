@@ -1,24 +1,31 @@
+import * as S from "./BoardCommentList.styles";
 import { IBoardCommentListUIItemProps } from "./BoardCommentList.types";
 import { getDate } from "../../../../commons/libraries/utils";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
+// queries
 import {
   DELETE_BOARD_COMMENT,
   FETCH_BOARD_COMMENTS,
 } from "./BoardCommentList.queries";
+// generic
 import {
   IMutation,
   IMutationDeleteBoardCommentArgs,
 } from "../../../../commons/types/generated/types";
+// BoardCommentWrite
 import BoardCommentWrite from "../write/BoardCommentWrite.container";
+// antd
+import { Rate, Modal } from "antd";
 
 export default function BoardCommentListUIItem(
   props: IBoardCommentListUIItemProps
 ) {
   const router = useRouter();
   const [isEdit, setIsEdit] = useState<Boolean>(false);
-  const [password, setPassword] = useState<String>("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [password, setPassword] = useState("");
 
   // deleteBoardComment useMutation
   const [deleteBoardComment] = useMutation<
@@ -33,7 +40,6 @@ export default function BoardCommentListUIItem(
 
   // 삭제하기 클릭
   const onClickDelete = async () => {
-    openDeletePrompt();
     try {
       await deleteBoardComment({
         variables: {
@@ -51,33 +57,54 @@ export default function BoardCommentListUIItem(
       alert(error.message);
     }
   };
-
-  // 삭제하기 클릭 -> 모달창
-  const openDeletePrompt = () => {
-    const promptPassword = prompt("비밀번호를 입력하세요");
-    alert(promptPassword);
-    setPassword(String(promptPassword));
+  console.log(props.el);
+  // 모달 토글
+  const onToggleModal = () => {
+    setIsOpen((prev) => !prev);
   };
+
+  // 비밀번호 onChange
+  const onChangePassword = (event) => {
+    setPassword(event.target.value);
+  };
+
   return (
     <>
       {!isEdit && (
-        <div>
-          <div>프로필사진</div>
-          <div>
-            <div>
-              <div>
-                <div>{props.el?.writer}</div>
-                <div>{props.el?.rating}</div>
-              </div>
-              <div>
-                <button onClick={onClickUpdate}>수정하기</button>
-                <button onClick={onClickDelete}>삭제하기</button>
-              </div>
-            </div>
-            <div>{props.el?.contents}</div>
-            <div>{getDate(props.el?.createdAt)}</div>
-          </div>
-        </div>
+        <S.CommentWrapper>
+          <S.CommentLeft>
+            <S.UserIcon />
+          </S.CommentLeft>
+          <S.CommentRight>
+            <S.CommentRightHead>
+              <S.CommentRightHeadLeft>
+                <S.Writer>{props.el?.writer}</S.Writer>
+                <Rate disabled defaultValue={props.el?.rating} />
+              </S.CommentRightHeadLeft>
+              <S.CommentRightHeadRight>
+                <S.EditIcon onClick={onClickUpdate} />
+                <S.CloseIcon onClick={onToggleModal} />
+                {/* 비밀번호 모달 */}
+                {isOpen && (
+                  <Modal
+                    visible={true}
+                    onOk={onClickDelete}
+                    onCancel={onToggleModal}
+                  >
+                    비밀번호 입력:{" "}
+                    <input
+                      type="password"
+                      maxLength={20}
+                      onChange={onChangePassword}
+                    />
+                  </Modal>
+                )}
+              </S.CommentRightHeadRight>
+            </S.CommentRightHead>
+            <S.Contents>{props.el?.contents}</S.Contents>
+            <S.CreatedAt>{getDate(props.el?.createdAt)}</S.CreatedAt>
+          </S.CommentRight>
+        </S.CommentWrapper>
       )}
       {isEdit && (
         <BoardCommentWrite isEdit={true} setIsEdit={setIsEdit} el={props.el} />

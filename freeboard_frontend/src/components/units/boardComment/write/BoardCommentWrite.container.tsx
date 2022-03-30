@@ -16,13 +16,14 @@ import {
   IBoardCommentWriteProps,
   IUpdateBoardCommentInput,
 } from "./BoardCommentWrite.types";
+import { success, error } from "../../../../commons/libraries/utils";
 
 export default function BoardCommentWrite(props: IBoardCommentWriteProps) {
   const router = useRouter();
   const [writer, setWriter] = useState("");
   const [password, setPassword] = useState("");
   const [contents, setContents] = useState("");
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(3);
 
   // createBoardComment useMutation
   const [createBoardComment] = useMutation<
@@ -46,10 +47,10 @@ export default function BoardCommentWrite(props: IBoardCommentWriteProps) {
   const onChangeContents = (event: ChangeEvent<HTMLTextAreaElement>) => {
     contents.length < 100
       ? setContents(event.target.value)
-      : alert("입력가능한 글자 수를 초과하셨습니다.");
+      : error("입력가능한 글자 수를 초과하셨습니다.");
   };
-  const onChangeRating = (event: ChangeEvent<HTMLInputElement>) => {
-    setRating(Number(event.target.value));
+  const onChangeRating = (value: number) => {
+    setRating(value);
   };
 
   // 수정하기 클릭
@@ -98,7 +99,7 @@ export default function BoardCommentWrite(props: IBoardCommentWriteProps) {
           },
         ],
       });
-      alert("댓글작성 성공");
+      success("댓글작성 성공");
     } catch (error) {
       alert(error.message);
     }
@@ -108,6 +109,7 @@ export default function BoardCommentWrite(props: IBoardCommentWriteProps) {
     <BoardCommentWriteUI
       isEdit={props.isEdit}
       el={props.el}
+      rating={rating}
       contents={contents}
       onChangeWriter={onChangeWriter}
       onChangePassword={onChangePassword}

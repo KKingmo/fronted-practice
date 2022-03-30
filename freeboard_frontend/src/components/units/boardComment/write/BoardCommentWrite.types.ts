@@ -10,6 +10,7 @@ export interface IBoardCommentWriteUIProps {
   isEdit?: boolean;
   el?: IBoardComment;
   contents: string;
+  defaultValue?: any;
   onChangeWriter: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangePassword: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangeContents: (event: ChangeEvent<HTMLTextAreaElement>) => void;

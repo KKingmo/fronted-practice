@@ -1,10 +1,29 @@
 import * as S from "./BoardWrite.styles";
 import { IBoardWriteUIProps } from "./BoardWrite.types";
+import { Modal } from "antd";
+import DaumPostcode from "react-daum-postcode";
+import { useState } from "react";
 
 export default function BoardWriteUI(props: IBoardWriteUIProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  // 우편번호검색 Toggle
+  const onToggleModal = (data) => {
+    console.log(data);
+    setIsOpen((prev) => !prev);
+    props.setAddress((prev) => data.address);
+    props.setZipcode((prev) => data.zonecode);
+  };
+
   return (
     <>
       <S.Wrapper>
+        {/* Address 모달창 */}
+        {isOpen && (
+          <Modal visible={true} onOk={onToggleModal} onCancel={onToggleModal}>
+            <DaumPostcode onComplete={onToggleModal} />
+          </Modal>
+        )}
         <S.Container>
           {/* isEdit = true(게시물 수정), false(게시물 등록) */}
           <S.Title>{props.isEdit ? "게시물 수정" : "게시물 등록"}</S.Title>
@@ -18,6 +37,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
                 placeholder="이름을 적어주세요."
                 onChange={props.onChangeWriter}
                 defaultValue={props.data?.fetchBoard.writer}
+                readOnly={props.isEdit}
               />
               <S.Error>{props.writerError}</S.Error>
             </S.ChildDiv1>
@@ -61,23 +81,31 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
                 <input
                   type="text"
                   placeholder="우편번호"
-                  onChange={props.onChangeZipcode}
-                  defaultValue={props.data?.fetchBoard.boardAddress?.zipcode}
+                  defaultValue={
+                    props.zipcode
+                      ? props.zipcode
+                      : props.data?.fetchBoard.boardAddress?.zipcode
+                  }
+                  readOnly={true}
                 />
-                <S.Search>우편번호 검색</S.Search>
+                <S.Search onClick={onToggleModal}>우편번호 검색</S.Search>
               </div>
               <S.Input
                 type="text"
-                onChange={props.onChangeAddress}
-                defaultValue={props.data?.fetchBoard.boardAddress?.address}
-              ></S.Input>
+                defaultValue={
+                  props.address
+                    ? props.address
+                    : props.data?.fetchBoard.boardAddress?.address
+                }
+                readOnly={true}
+              />
               <S.Input
                 type="text"
                 onChange={props.onChangeAddressDetail}
                 defaultValue={
                   props.data?.fetchBoard.boardAddress?.addressDetail
                 }
-              ></S.Input>
+              />
             </S.ChildDiv4>
           </S.ParentDiv>
           <S.ParentDiv>
@@ -87,7 +115,11 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
                 type="text"
                 placeholder="링크를 복사해주세요."
                 onChange={props.onChangeYoutubeUrl}
-                defaultValue={props.data?.fetchBoard.youtubeUrl}
+                defaultValue={
+                  props.isEdit
+                    ? props.data?.fetchBoard.youtubeUrl
+                    : props.youtubeUrl
+                }
               />
             </S.ChildDiv2>
           </S.ParentDiv>

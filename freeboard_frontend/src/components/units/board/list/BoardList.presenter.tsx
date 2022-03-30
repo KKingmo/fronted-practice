@@ -28,7 +28,7 @@ export default function BoardListUI(props: IBoardListUIProps) {
       <S.TableBottom />
       <S.Footer>
         <S.Button onClick={props.onClickMoveToBoardNew}>
-          <S.PencilIcon src="/images/board/list/write.png" />
+          <S.PencilIcon />
           게시물 등록하기
         </S.Button>
       </S.Footer>

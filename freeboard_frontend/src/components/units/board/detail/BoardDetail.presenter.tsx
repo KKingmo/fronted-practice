@@ -6,6 +6,7 @@ import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import ThumbDownOutlinedIcon from "@material-ui/icons/ThumbDownOutlined";
 import { IBoardDetailUIProps } from "./BoardDetail.types";
 import { getDate } from "../../../../commons/libraries/utils";
+import ReactPlayer from "react-player";
 
 export default function BoardDetailUI(props: IBoardDetailUIProps) {
   return (
@@ -53,11 +54,11 @@ export default function BoardDetailUI(props: IBoardDetailUIProps) {
               <div>{props.data?.fetchBoard.contents}</div>
               <div>
                 <S.VideoContainer>
-                  <iframe
-                    className="youtubeVideo"
-                    title="Youtube player"
-                    src={`https://youtube.com/embed/${props.data?.fetchBoard.youtubeUrl}?autoplay=0`}
-                  ></iframe>
+                  <ReactPlayer
+                    url={props.data?.fetchBoard.youtubeUrl}
+                    muted={true}
+                    playing={true}
+                  />
                 </S.VideoContainer>
               </div>
             </S.BoardBodyContents>
@@ -65,14 +66,22 @@ export default function BoardDetailUI(props: IBoardDetailUIProps) {
             <S.BoardBodyReaction>
               <S.FlexColumn className="yellowIcon cursorPointer">
                 <ThumbUpAltOutlinedIcon onClick={props.onClickLike} />
-                {props.data?.fetchBoard.likeCount}
+                {props.likeCount
+                  ? props.likeCount
+                  : props.data
+                  ? props.data.fetchBoard.likeCount
+                  : "loading..."}
               </S.FlexColumn>
               <S.FlexColumn>
                 <ThumbDownOutlinedIcon
                   className="cursorPointer"
                   onClick={props.onClickDislike}
                 />
-                {props.data?.fetchBoard.dislikeCount}
+                {props.dislikeCount
+                  ? props.dislikeCount
+                  : props.data
+                  ? props.data.fetchBoard.dislikeCount
+                  : "loading..."}
               </S.FlexColumn>
             </S.BoardBodyReaction>
           </S.BoardBody>

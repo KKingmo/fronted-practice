@@ -8,6 +8,7 @@ import {
   IMyVariablesInput,
   IMyBoardAddressInput,
 } from "./BoardWrite.types";
+import { success } from "../../../../commons/libraries/utils";
 
 export default function BoardWrite(props: IBoardWriteProps) {
   const router = useRouter();
@@ -20,12 +21,10 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const [password, setPassword] = useState("");
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
-  const [youtubeUrl, setYoutubeUrl] = useState("yLZMeesKbJo");
-  const [zipcode, setZipcode] = useState("07250");
-  const [address, setAddress] = useState("서울특별시 영등포구 양산로 200");
-  const [addressDetail, setAddressDetail] = useState(
-    "(영등포동5가, 영등포시장역) 영등포 타임스퀘어 2층"
-  );
+  const [youtubeUrl, setYoutubeUrl] = useState("");
+  const [zipcode, setZipcode] = useState("");
+  const [address, setAddress] = useState("");
+  const [addressDetail, setAddressDetail] = useState("");
   const [images, setImages] = useState([
     "https://cdn.pixabay.com/photo/2015/11/22/19/04/crowd-1056764_1280.jpg",
   ]); // 이미지 첨부하는 기능 필요
@@ -96,14 +95,6 @@ export default function BoardWrite(props: IBoardWriteProps) {
     }
   };
 
-  // 우편번호 입력
-  const onChangeZipcode = (event: ChangeEvent<HTMLInputElement>) => {
-    setZipcode(event.target.value);
-  };
-  // 주소입력
-  const onChangeAddress = (event: ChangeEvent<HTMLInputElement>) => {
-    setAddress(event.target.value);
-  };
   // 유튜브Url 입력
   const onChangeYoutubeUrl = (event: ChangeEvent<HTMLInputElement>) => {
     setYoutubeUrl(event.target.value);
@@ -156,7 +147,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
     }
     if (writer !== "" && password !== "" && title !== "" && contents !== "") {
       callRestApi();
-      alert("게시물 등록에 성공하였습니다!");
+      success("게시물 등록에 성공하였습니다!");
     }
   };
 
@@ -182,10 +173,11 @@ export default function BoardWrite(props: IBoardWriteProps) {
           boardId: router.query.boardId,
         },
       });
-      alert("게시물 수정에 성공하였습니다!");
+      success("게시물 수정에 성공하였습니다!");
       router.push(`/boards/${router.query.boardId}`);
     } catch (error) {
       alert(error.message);
+      console.log(myVariables);
     }
   };
 
@@ -193,17 +185,19 @@ export default function BoardWrite(props: IBoardWriteProps) {
     <BoardWriteUI
       data={props.data}
       isEdit={props.isEdit}
+      zipcode={zipcode}
+      address={address}
       isActive={isActive}
       writerError={writerError}
       passwordError={passwordError}
       titleError={titleError}
       contentsError={contentsError}
+      setZipcode={setZipcode}
+      setAddress={setAddress}
       onChangeWriter={onChangeWriter}
       onChangePassword={onChangePassword}
       onChangeTitle={onChangeTitle}
       onChangeContents={onChangeContents}
-      onChangeZipcode={onChangeZipcode}
-      onChangeAddress={onChangeAddress}
       onChangeYoutubeUrl={onChangeYoutubeUrl}
       onChangeAddressDetail={onChangeAddressDetail}
       onClickSubmit={onClickSubmit}
