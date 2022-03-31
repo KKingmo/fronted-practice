@@ -9,12 +9,11 @@ const BodyWrapper = styled.div`
 `;
 
 const Body = styled.div`
-  height: 300px;
+  width: 100%;
 `;
 
 const LayoutSidebar = styled.div`
   width: 400px;
-  height: 300px;
   background-color: skyblue;
 `;
 

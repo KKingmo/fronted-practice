@@ -55,13 +55,14 @@ export const ColumnTitle = styled.div`
 export const Footer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   padding-top: 50px;
 `;
 
 export const PencilIcon = styled(CreateIcon)``;
 
 export const Button = styled.button`
+  margin-left: 50px;
   width: 171px;
   height: 52px;
   background-color: white;

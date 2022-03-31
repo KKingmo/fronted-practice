@@ -1,6 +1,6 @@
 import BoardListUI from "./BoardList.presenter";
 import { useQuery } from "@apollo/client";
-import { FETCH_BOARDS } from "./BoardList.queries";
+import { FETCH_BOARDS, FETCH_BOARDS_COUNT } from "./BoardList.queries";
 import { useRouter } from "next/router";
 import {
   IQuery,
@@ -12,10 +12,14 @@ export default function BoardList() {
   const router = useRouter();
 
   // FetchBoards useQuery
-  const { data } = useQuery<Pick<IQuery, "fetchBoards">, IQueryFetchBoardsArgs>(
-    FETCH_BOARDS
-  );
+  const { data, refetch } = useQuery<
+    Pick<IQuery, "fetchBoards">,
+    IQueryFetchBoardsArgs
+  >(FETCH_BOARDS);
 
+  // BoardsCount useQuery
+  const { data: dataBoardsCount } = useQuery(FETCH_BOARDS_COUNT);
+  const lastPage = Math.ceil(dataBoardsCount?.fetchBoardsCount / 10);
   // 게시글 생성하기
   const onClickMoveToBoardNew = () => {
     router.push("/boards/new");
@@ -29,6 +33,8 @@ export default function BoardList() {
   return (
     <BoardListUI
       data={data}
+      refetch={refetch}
+      lastPage={lastPage}
       onClickMoveToBoardNew={onClickMoveToBoardNew}
       onClickMoveToBoardDetail={onClickMoveToBoardDetail}
     />
