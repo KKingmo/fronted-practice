@@ -1,81 +1,94 @@
-// https://programmers.co.kr/learn/courses/30/lessons/12943
+// https://programmers.co.kr/learn/courses/30/lessons/68644
 // solution - mento
-function solution(num) {
-  // 1이 될떄까지 반복한 횟수
-  let answer = 0;
+function solution(numbers) {
+  const answer = [];
+  for (let i = 0; i < numbers.length; i++) {
+    for (let l = i + 1; l < numbers.length; l++) {
+      const sum = numbers[i] + numbers[l];
 
-  for (let i = 0; i < 500; i++) {
-    if (num === 1) {
-      // 예외 처리는 최상단에 해야 테스트통과 잘된다!
-      break;
-    }
-    answer++;
-    // num이 짝수일 때 : 해당 수에 2를 곱한다.
-    if (num % 2 === 0) {
-      num /= 2;
-      // num = num / 2;
-      // num이 홀수일 때 : 해당 수에 3을 곱한 값에 1을 더한다.
-    } else {
-      num = num * 3 + 1;
+      if (answer.includes(sum) === false) {
+        answer.push(sum);
+      }
     }
   }
-  return num !== 1 ? -1 : answer;
+  return answer.sort((a, b) => a - b);
 }
 
-// solution - mento
-function solution(num) {
-  // 1이 될떄까지 반복한 횟수
-  let answer = 0;
+// Set
+// 1. 고유한 데이터만 받아올 수 있다.(중복되지 않는)
+// 2. 겉은 배열 형태이지만, 타입음 객체 형태를 가진다.
 
-  for (let i = 0; i < 500; i++) {
-    if (num === 1) {
-      return answer;
-    }
-    answer++;
-    // num이 짝수일 때 : 해당 수에 2를 곱한다.
-    if (num % 2 === 0) {
-      num /= 2;
-      // num = num / 2;
-      // num이 홀수일 때 : 해당 수에 3을 곱한 값에 1을 더한다.
-    } else {
-      num = num * 3 + 1;
+// New
+// 1. 뒤에 들어오는 데이터를 새로운 객체 형태로 리턴.
+
+// 데이터 추가하기
+// Array.isArray(obj) 배열인지 검사. boolean 반환
+// arr.add(1); , add.add(2);
+
+// 데이터 조회
+// arr.has(1); boolean 반환
+
+// 데이터 삭제
+// arr.delete(1); 있는 값을 제거하면 true, 없는 값을 제거하면 false
+
+// 데이터 초기화
+// arr.clear();
+
+// 데이터 반복
+// Array.forEach( el => {console.log(el)})
+// new Set에서 사용하는 forEach와 배열에서 사용하는 forEach와는 다르다.
+
+// set => 배열로 변환
+// 1. Array.from
+// Array.from( arr )
+// 2. spread 연산자 사용
+// const answer = [...arr]
+// answer
+
+// solution - refactoring - from사용
+function solution(numbers) {
+  const answer = new Set();
+  for (let i = 0; i < numbers.length; i++) {
+    for (let l = i + 1; l < numbers.length; l++) {
+      const sum = numbers[i] + numbers[l];
+      answer.add(sum);
     }
   }
-  return -1;
+  return Array.from(answer).sort((a, b) => a - b);
 }
 
-// solution - mento - shortest
-function solution(num) {
-  let answer = 0;
-
-  // 조건식이 true 일 때만 반복 로직이 실행
-  while (num !== 1) {
-    // num 이 1일 될 때까지 무한으로 실행된다.
-    if (answer >= 500) {
-      return -1;
+// solution - refactoring - 스프레드 연산자 사용
+function solution(numbers) {
+  const answer = new Set();
+  for (let i = 0; i < numbers.length; i++) {
+    for (let l = i + 1; l < numbers.length; l++) {
+      const sum = numbers[i] + numbers[l];
+      answer.add(sum);
     }
-    answer++;
-    num =
-      num % 2 === 0
-        ? num / 2 // 짝수일 경우
-        : num * 3 + 1; // 홀수일 경우
   }
-  return answer;
+  return [...answer].sort((a, b) => a - b);
 }
 
-// solution - mento - reduce사용하기
-function solution(num) {
-  let answer = 0;
-
-  const result = new Array(500).fill(1).reduce((acc) => {
-    if (acc !== 1) {
-      answer++;
-      return acc % 2 === 0
-        ? acc / 2 // 짝수일 때
-        : acc * 3 + 1; // 홀수일 때
-    } else {
-      return 1;
+// solution - refactoring
+function solution(numbers) {
+  const temp = [];
+  for (let i = 0; i < numbers.length; i++) {
+    for (let j = i + 1; j < numbers.length; j++) {
+      temp.push(numbers[i] + numbers[j]);
     }
-  }, num);
-  return result !== 1 ? -1 : answer;
+  }
+  const answer = [...new Set(temp)];
+  return answer.sort((a, b) => a - b);
+}
+
+// solution - forEach사용하기
+function solution(numbers) {
+  const answer = new Set();
+  numbers.forEach((num1, i) => {
+    numbers.slice(i + 1).forEach((num2) => {
+      const sum = num1 + num2;
+      answer.add(sum);
+    });
+  });
+  return [...answer].sort((a, b) => a - b);
 }

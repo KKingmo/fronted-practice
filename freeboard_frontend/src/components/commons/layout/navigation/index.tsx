@@ -6,7 +6,7 @@ const Wrapper = styled.div`
   align-items: center;
   padding: 18px 0px;
   height: 64px;
-  background-color: #ffd600;
+  background-color: rgb(245, 218, 79);
 
   & > div {
     font-size: 18px;

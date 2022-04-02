@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import {
   IQuery,
   IQueryFetchBoardsArgs,
+  IQueryFetchBoardsCountArgs,
 } from "../../../../commons/types/generated/types";
 import { MouseEvent } from "react";
 
@@ -18,8 +19,12 @@ export default function BoardList() {
   >(FETCH_BOARDS);
 
   // BoardsCount useQuery
-  const { data: dataBoardsCount } = useQuery(FETCH_BOARDS_COUNT);
+  const { data: dataBoardsCount } = useQuery<
+    Pick<IQuery, "fetchBoardsCount">,
+    IQueryFetchBoardsCountArgs
+  >(FETCH_BOARDS_COUNT);
   const lastPage = Math.ceil(dataBoardsCount?.fetchBoardsCount / 10);
+
   // 게시글 생성하기
   const onClickMoveToBoardNew = () => {
     router.push("/boards/new");

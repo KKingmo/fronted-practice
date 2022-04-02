@@ -10,9 +10,7 @@ const BodyWrapper = styled.div`
   padding-top: 80px;
 `;
 
-const Body = styled.div`
-  height: 500px;
-`;
+const Body = styled.div``;
 
 interface ILayoutProps {
   children: ReactNode;
