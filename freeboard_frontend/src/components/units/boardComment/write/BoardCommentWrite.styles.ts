@@ -55,7 +55,6 @@ export const ContentsTextarea = styled.textarea`
   border-bottom: 1px solid #f2f2f2;
   font-size: 16px;
   font-weight: 500;
-  color: #bdbdbd;
 `;
 export const ContentsBottom = styled.div`
   display: flex;

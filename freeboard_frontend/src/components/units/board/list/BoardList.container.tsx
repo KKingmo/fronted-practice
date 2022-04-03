@@ -1,6 +1,10 @@
 import BoardListUI from "./BoardList.presenter";
 import { useQuery } from "@apollo/client";
-import { FETCH_BOARDS, FETCH_BOARDS_COUNT } from "./BoardList.queries";
+import {
+  FETCH_BOARDS,
+  FETCH_BOARDS_COUNT,
+  FETCH_BOARDS_OF_THE_BEST,
+} from "./BoardList.queries";
 import { useRouter } from "next/router";
 import {
   IQuery,
@@ -25,10 +29,22 @@ export default function BoardList() {
   >(FETCH_BOARDS_COUNT);
   const lastPage = Math.ceil(dataBoardsCount?.fetchBoardsCount / 10);
 
+  // BoardsOfTheBest useQuery
+  const { data: dataBoardsOfTheBest } = useQuery<
+    Pick<IQuery, "fetchBoardsOfTheBest">
+  >(FETCH_BOARDS_OF_THE_BEST);
+
+  // 베스트 게시글 상세보기
+  const onClickMoveToBestBoardDetail = (event: MouseEvent<HTMLDivElement>) => {
+    if (event.target instanceof HTMLDivElement)
+      router.push(`/boards/${event.currentTarget.id}`);
+  };
+
   // 게시글 생성하기
   const onClickMoveToBoardNew = () => {
     router.push("/boards/new");
   };
+
   // 게시글 상세보기
   const onClickMoveToBoardDetail = (event: MouseEvent<HTMLDivElement>) => {
     if (event.target instanceof HTMLDivElement)
@@ -38,8 +54,10 @@ export default function BoardList() {
   return (
     <BoardListUI
       data={data}
+      dataBoardsOfTheBest={dataBoardsOfTheBest}
       refetch={refetch}
       lastPage={lastPage}
+      onClickMoveToBestBoardDetail={onClickMoveToBestBoardDetail}
       onClickMoveToBoardNew={onClickMoveToBoardNew}
       onClickMoveToBoardDetail={onClickMoveToBoardDetail}
     />

@@ -25,7 +25,7 @@ export default function LayoutBanner() {
     <Wrapper>
       <Slider {...settings}>
         <div>
-          <SliderItem src="/images/layout/banner01.jpg" />
+          <SliderItem src="/images/layout/banner01.jpeg" />
         </div>
         <div>
           <SliderItem src="/images/layout/banner02.jpg" />

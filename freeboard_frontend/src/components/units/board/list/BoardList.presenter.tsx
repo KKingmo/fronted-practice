@@ -1,11 +1,43 @@
 import * as S from "./BoardList.styles";
-import { getDate } from "../../../../commons/libraries/utils";
 import { IBoardListUIProps } from "./BoardList.types";
 import Pagination from "../../../commons/pagination/Pagination.container";
+import { getDate } from "../../../../commons/libraries/utils";
 
 export default function BoardListUI(props: IBoardListUIProps) {
   return (
     <S.Wrapper>
+      <S.BoardsBestTitle>베스트 게시글</S.BoardsBestTitle>
+      <S.BoardsBestList>
+        {props.dataBoardsOfTheBest?.fetchBoardsOfTheBest.map((el) => (
+          <S.BoardsBestItem
+            key={el._id}
+            id={el._id}
+            onClick={props.onClickMoveToBestBoardDetail}
+          >
+            <S.BoardsBestItemTop>
+              <img src={el.images[0]} alt="이미지가 없습니다." />
+            </S.BoardsBestItemTop>
+            <S.BoardsBestItemTitle>{el.title}</S.BoardsBestItemTitle>
+            <S.BoardsBestItemBottom>
+              <S.BoardsBestItemBottomContents>
+                <div>
+                  <S.BoardsBestItemUserIcon />
+                  {el.writer}
+                </div>
+                <div>
+                  <span>Date : {getDate(el.createdAt)}</span>
+                </div>
+              </S.BoardsBestItemBottomContents>
+              <S.BoardsBestItemBottomContents>
+                <div>
+                  <S.LikeBoardIcon />
+                </div>
+                <div>{el.likeCount}</div>
+              </S.BoardsBestItemBottomContents>
+            </S.BoardsBestItemBottom>
+          </S.BoardsBestItem>
+        ))}
+      </S.BoardsBestList>
       <S.TableTop />
       <S.Row>
         <S.ColumnHeaderBasic>번호</S.ColumnHeaderBasic>
