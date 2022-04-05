@@ -16,7 +16,6 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
       zipcode: data.zonecode,
     }));
   };
-  console.log(props.inputsBoardAddress);
   return (
     <>
       <S.Wrapper>

@@ -43,22 +43,24 @@ export default function BoardWrite(props: IBoardWriteProps) {
 
   // inputs 입력
   const onChangeInputs = (event) => {
-    setInputs({
+    setInputs((prev) => ({
       ...inputs,
       [event.target.id]: event.target.value,
-    });
-    // inputs 모두 입력되면 활성화 - 수정필요
-    // if (inputs) {
-    //   setIsActive(true);
-    // } else {
-    //   setIsActive(false);
-    // }
-    // 에러메세지 - 수정필요
+    }));
+
+    // 에러메세지
     if (event.target.value !== "") {
       setErrorInputs({
         ...errorInputs,
         [event.target.name]: "",
       });
+    }
+
+    // inputs 모두 입력되면 활성화 - 수정필요(의도보다 한 타이밍 늦음)
+    if (inputs.writer && inputs.password && inputs.title && inputs.contents) {
+      setIsActive((prev) => true);
+    } else {
+      setIsActive((prev) => false);
     }
   };
 
@@ -68,18 +70,10 @@ export default function BoardWrite(props: IBoardWriteProps) {
       ...inputsBoardAddress,
       [event.target.id]: event.target.value,
     }));
-    // Object.values(inputs).forEach((el) => {
-    //   if (el !== "") {
-    //     console.log(true);
-    //   } else {
-    //     console.log(false);
-    //   }
-    // });
   };
 
-  // 백엔드에 요청하기
+  // 백엔드에 등록하기 요청
   const callRestApi = async () => {
-    console.log({ ...inputs, boardAddress: { ...inputsBoardAddress } });
     try {
       const result = await createBoard({
         variables: {
@@ -97,67 +91,47 @@ export default function BoardWrite(props: IBoardWriteProps) {
 
   // 등록하기 클릭 - 수정필요
   const onClickSubmit = () => {
-    if (!inputs.writer) {
-      setErrorInputs((prev) => ({
-        ...errorInputs,
-        writerError: "작성자를 입력해주세요.",
-      }));
-    }
+    setErrorInputs((prev) => ({
+      writerError: !inputs.writer ? "작성자를 입력해주세요." : "",
+      passwordError: !inputs.password ? "비밀번호를 입력해주세요." : "",
+      titleError: !inputs.title ? "제목을 입력해주세요." : "",
+      contentsError: !inputs.contents ? "내용을 입력해주세요." : "",
+    }));
 
-    if (!inputs.password) {
-      setErrorInputs((prev) => ({
-        ...errorInputs,
-        passwordError: "비밀번호를 입력해주세요.",
-      }));
-    }
-
-    if (!inputs.title) {
-      setErrorInputs((prev) => ({
-        ...errorInputs,
-        titleError: "제목을 입력해주세요.",
-      }));
-    }
-
-    if (!inputs.contents) {
-      setErrorInputs((prev) => ({
-        ...errorInputs,
-        contentsError: "내용을 입력해주세요.",
-      }));
-    }
-
-    if (
-      inputs.writer !== "" &&
-      inputs.password !== "" &&
-      inputs.title !== "" &&
-      inputs.contents !== ""
-    ) {
+    if (inputs.writer && inputs.password && inputs.title && inputs.contents) {
       callRestApi();
       success("게시물 등록에 성공하였습니다!");
     }
-    console.log(errorInputs);
   };
 
   // 수정하기 클릭
   const onClickUpdate = async () => {
-    const myBoardAddress: IMyBoardAddressInput = {};
-    const myVariables: IMyVariablesInput = { boardAddress: myBoardAddress };
-
-    if (inputs.title) myVariables.title = inputs.title;
-    if (inputs.contents) myVariables.contents = inputs.contents;
-    if (inputs.youtubeUrl) myVariables.youtubeUrl = inputs.youtubeUrl;
-    if (inputs.images) myVariables.images = inputs.images;
-
-    if (inputsBoardAddress.zipcode)
-      myBoardAddress.zipcode = inputsBoardAddress.zipcode;
-    if (inputsBoardAddress.address)
-      myBoardAddress.address = inputsBoardAddress.address;
-    if (inputsBoardAddress.addressDetail)
-      myBoardAddress.addressDetail = inputsBoardAddress.addressDetail;
-
+    const updateVariables: IMyVariablesInput = {
+      title: inputs.title ? inputs.title : props.data?.fetchBoard.title,
+      contents: inputs.contents
+        ? inputs.contents
+        : props.data?.fetchBoard.contents,
+      youtubeUrl: inputs.youtubeUrl
+        ? inputs.youtubeUrl
+        : props.data?.fetchBoard.youtubeUrl,
+      images: inputs.images ? inputs.images : props.data?.fetchBoard.images,
+      boardAddress: {
+        zipcode: inputsBoardAddress.zipcode
+          ? inputsBoardAddress.zipcode
+          : props.data?.fetchBoard.boardAddress?.zipcode,
+        address: inputsBoardAddress.address
+          ? inputsBoardAddress.address
+          : props.data?.fetchBoard.boardAddress?.address,
+        addressDetail: inputsBoardAddress.addressDetail
+          ? inputsBoardAddress.addressDetail
+          : props.data?.fetchBoard.boardAddress?.addressDetail,
+      },
+    };
+    // 백엔드에 수정하기 요청
     try {
       await updateBoard({
         variables: {
-          updateBoardInput: myVariables,
+          updateBoardInput: updateVariables,
           password: inputs.password,
           boardId: router.query.boardId,
         },
@@ -166,7 +140,6 @@ export default function BoardWrite(props: IBoardWriteProps) {
       router.push(`/boards/${router.query.boardId}`);
     } catch (error) {
       alert(error.message);
-      console.log(myVariables);
     }
   };
 
