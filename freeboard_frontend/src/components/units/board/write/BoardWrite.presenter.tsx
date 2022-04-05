@@ -9,12 +9,14 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
 
   // 우편번호검색 Toggle
   const onToggleModal = (data) => {
-    console.log(data);
     setIsOpen((prev) => !prev);
-    props.setAddress((prev) => data.address);
-    props.setZipcode((prev) => data.zonecode);
+    props.setInputsBoardAddress((prev) => ({
+      ...props.inputsBoardAddress,
+      address: data.address,
+      zipcode: data.zonecode,
+    }));
   };
-
+  console.log(props.inputsBoardAddress);
   return (
     <>
       <S.Wrapper>
@@ -33,45 +35,53 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
                 작성자 <S.Yellow>*</S.Yellow>
               </S.Span>
               <S.Input
+                id="writer"
+                name="writerError"
                 type="text"
                 placeholder="이름을 적어주세요."
-                onChange={props.onChangeWriter}
+                onChange={props.onChangeInputs}
                 defaultValue={props.data?.fetchBoard.writer}
                 readOnly={props.isEdit}
               />
-              <S.Error>{props.writerError}</S.Error>
+              <S.Error>{props.errorInputs.writerError}</S.Error>
             </S.ChildDiv1>
             <S.ChildDiv1>
               <S.Span>비밀번호</S.Span>
               <S.Input
+                id="password"
+                name="passwordError"
                 type="password"
                 placeholder="비밀번호를 입력해주세요."
-                onChange={props.onChangePassword}
+                onChange={props.onChangeInputs}
               />
-              <S.Error>{props.passwordError}</S.Error>
+              <S.Error>{props.errorInputs.passwordError}</S.Error>
             </S.ChildDiv1>
           </S.ParentDiv>
           <S.ParentDiv>
             <S.ChildDiv2>
               <S.Span>제목</S.Span>
               <S.Input
+                id="title"
+                name="titleError"
                 type="text"
                 placeholder="제목을 작성해주세요."
-                onChange={props.onChangeTitle}
+                onChange={props.onChangeInputs}
                 defaultValue={props.data?.fetchBoard.title}
               />
-              <S.Error>{props.titleError}</S.Error>
+              <S.Error>{props.errorInputs.titleError}</S.Error>
             </S.ChildDiv2>
           </S.ParentDiv>
           <S.ParentDiv>
             <S.ChildDiv3>
               <S.Span>내용</S.Span>
               <textarea
+                id="contents"
+                name="contentsError"
                 placeholder="내용을 작성해주세요."
-                onChange={props.onChangeContents}
+                onChange={props.onChangeInputs}
                 defaultValue={props.data?.fetchBoard.contents}
               />
-              <S.Error>{props.contentsError}</S.Error>
+              <S.Error>{props.errorInputs.contentsError}</S.Error>
             </S.ChildDiv3>
           </S.ParentDiv>
           <S.ParentDiv>
@@ -79,11 +89,13 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
               <S.Span>주소</S.Span>
               <div>
                 <input
+                  id="zipcode"
                   type="text"
                   placeholder="우편번호"
+                  defaultValue={props.data?.fetchBoard.boardAddress?.zipcode}
                   defaultValue={
-                    props.zipcode
-                      ? props.zipcode
+                    props.inputsBoardAddress.zipcode
+                      ? props.inputsBoardAddress.zipcode
                       : props.data?.fetchBoard.boardAddress?.zipcode
                   }
                   readOnly={true}
@@ -91,17 +103,20 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
                 <S.Search onClick={onToggleModal}>우편번호 검색</S.Search>
               </div>
               <S.Input
+                id="address"
                 type="text"
+                defaultValue={props.data?.fetchBoard.boardAddress?.address}
                 defaultValue={
-                  props.address
-                    ? props.address
+                  props.inputsBoardAddress.address
+                    ? props.inputsBoardAddress.address
                     : props.data?.fetchBoard.boardAddress?.address
                 }
                 readOnly={true}
               />
               <S.Input
+                id="addressDetail"
                 type="text"
-                onChange={props.onChangeAddressDetail}
+                onChange={props.onChangeInputsBoardAddress}
                 defaultValue={
                   props.data?.fetchBoard.boardAddress?.addressDetail
                 }
@@ -112,14 +127,11 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
             <S.ChildDiv2>
               <S.Span>유튜브</S.Span>
               <S.Input
+                id="youtubeUrl"
                 type="text"
                 placeholder="링크를 복사해주세요."
-                onChange={props.onChangeYoutubeUrl}
-                defaultValue={
-                  props.isEdit
-                    ? props.data?.fetchBoard.youtubeUrl
-                    : props.youtubeUrl
-                }
+                onChange={props.onChangeInputs}
+                defaultValue={props.data?.fetchBoard.youtubeUrl}
               />
             </S.ChildDiv2>
           </S.ParentDiv>

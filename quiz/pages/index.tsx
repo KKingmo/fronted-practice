@@ -6,8 +6,8 @@ export default function Home() {
   return (
     <div>
       <div>
-        <a href="http://localhost:3000/quiz/quiz5-1">
-          3주차-5 Quiz! 주소는 여기입니다.
+        <a href="http://localhost:3000/quiz/quiz0405-1">
+          4월5일 Quiz! - 1 주소는 여기입니다.
         </a>
       </div>
     </div>

@@ -16,139 +16,125 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const [updateBoard] = useMutation(UPDATE_BOARD);
   const [isActive, setIsActive] = useState(false);
 
-  // 게시글 입력 내용
-  const [writer, setWriter] = useState("");
-  const [password, setPassword] = useState("");
-  const [title, setTitle] = useState("");
-  const [contents, setContents] = useState("");
-  const [youtubeUrl, setYoutubeUrl] = useState("");
-  const [zipcode, setZipcode] = useState("");
-  const [address, setAddress] = useState("");
-  const [addressDetail, setAddressDetail] = useState("");
-  const [images, setImages] = useState([
-    "https://cdn.pixabay.com/photo/2015/11/22/19/04/crowd-1056764_1280.jpg",
-  ]); // 이미지 첨부하는 기능 필요
+  // 게시글 입력(주소)
+  const [inputsBoardAddress, setInputsBoardAddress] = useState({
+    zipcode: "",
+    address: "",
+    addressDetail: "",
+  });
 
-  // 에러 메세지
-  const [writerError, setWriterError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [titleError, setTitleError] = useState("");
-  const [contentsError, setContentsError] = useState("");
+  // 게시글 입력
+  const [inputs, setInputs] = useState({
+    writer: "",
+    password: "",
+    title: "",
+    contents: "",
+    youtubeUrl: "",
+    images: [""],
+  });
 
-  // 작성자 입력
-  const onChangeWriter = (event: ChangeEvent<HTMLInputElement>) => {
-    setWriter(event.target.value);
+  // inputs 빈칸 에러 메세지
+  const [errorInputs, setErrorInputs] = useState({
+    writerError: "",
+    passwordError: "",
+    titleError: "",
+    contentsError: "",
+  });
+
+  // inputs 입력
+  const onChangeInputs = (event) => {
+    setInputs({
+      ...inputs,
+      [event.target.id]: event.target.value,
+    });
+    // inputs 모두 입력되면 활성화 - 수정필요
+    // if (inputs) {
+    //   setIsActive(true);
+    // } else {
+    //   setIsActive(false);
+    // }
+    // 에러메세지 - 수정필요
     if (event.target.value !== "") {
-      setWriterError("");
-    }
-
-    // 모두 입력되면 isActive true
-    if (event.target.value && password && title && contents) {
-      setIsActive(true);
-    } else {
-      setIsActive(false);
+      setErrorInputs({
+        ...errorInputs,
+        [event.target.name]: "",
+      });
     }
   };
 
-  // 비밀번호 입력
-  const onChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-    if (event.target.value !== "") {
-      setPasswordError("");
-    }
-
-    // 모두 입력되면 isActive true
-    if (writer && event.target.value && title && contents) {
-      setIsActive(true);
-    } else {
-      setIsActive(false);
-    }
-  };
-
-  // 제목 입력
-  const onChangeTitle = (event: ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value);
-    if (event.target.value !== "") {
-      setTitleError("");
-    }
-
-    // 모두 입력되면 isActive true
-    if (writer && password && event.target.value && contents) {
-      setIsActive(true);
-    } else {
-      setIsActive(false);
-    }
-  };
-
-  // 내용 입력
-  const onChangeContents = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setContents(event.target.value);
-    if (event.target.value !== "") {
-      setContentsError("");
-    }
-
-    // 모두 입력되면 isActive true
-    if (writer && password && title && event.target.value) {
-      setIsActive(true);
-    } else {
-      setIsActive(false);
-    }
-  };
-
-  // 유튜브Url 입력
-  const onChangeYoutubeUrl = (event: ChangeEvent<HTMLInputElement>) => {
-    setYoutubeUrl(event.target.value);
-  };
-  // 주소상세 입력
-  const onChangeAddressDetail = (event: ChangeEvent<HTMLInputElement>) => {
-    setAddressDetail(event.target.value);
+  // inputs 입력(주소)
+  const onChangeInputsBoardAddress = (event) => {
+    setInputsBoardAddress((prev) => ({
+      ...inputsBoardAddress,
+      [event.target.id]: event.target.value,
+    }));
+    // Object.values(inputs).forEach((el) => {
+    //   if (el !== "") {
+    //     console.log(true);
+    //   } else {
+    //     console.log(false);
+    //   }
+    // });
   };
 
   // 백엔드에 요청하기
   const callRestApi = async () => {
+    console.log({ ...inputs, boardAddress: { ...inputsBoardAddress } });
     try {
       const result = await createBoard({
         variables: {
           createBoardInput: {
-            writer: writer,
-            password: password,
-            title: title,
-            contents: contents,
-            youtubeUrl: youtubeUrl,
-            boardAddress: {
-              zipcode: zipcode,
-              address: address,
-              addressDetail: addressDetail,
-            },
-            images: images,
+            ...inputs,
+            boardAddress: { ...inputsBoardAddress },
           },
         },
       });
-      console.log(result);
       router.push(`/boards/${result.data.createBoard._id}`);
     } catch (error) {
       alert(error.message);
     }
   };
 
-  // 등록하기 클릭
+  // 등록하기 클릭 - 수정필요
   const onClickSubmit = () => {
-    if (writer === "") {
-      setWriterError("작성자를 입력해주세요.");
+    if (!inputs.writer) {
+      setErrorInputs((prev) => ({
+        ...errorInputs,
+        writerError: "작성자를 입력해주세요.",
+      }));
     }
-    if (password === "") {
-      setPasswordError("비밀번호를 입력해주세요.");
+
+    if (!inputs.password) {
+      setErrorInputs((prev) => ({
+        ...errorInputs,
+        passwordError: "비밀번호를 입력해주세요.",
+      }));
     }
-    if (title === "") {
-      setTitleError("제목을 입력해주세요.");
+
+    if (!inputs.title) {
+      setErrorInputs((prev) => ({
+        ...errorInputs,
+        titleError: "제목을 입력해주세요.",
+      }));
     }
-    if (contents === "") {
-      setContentsError("내용을 입력해주세요.");
+
+    if (!inputs.contents) {
+      setErrorInputs((prev) => ({
+        ...errorInputs,
+        contentsError: "내용을 입력해주세요.",
+      }));
     }
-    if (writer !== "" && password !== "" && title !== "" && contents !== "") {
+
+    if (
+      inputs.writer !== "" &&
+      inputs.password !== "" &&
+      inputs.title !== "" &&
+      inputs.contents !== ""
+    ) {
       callRestApi();
       success("게시물 등록에 성공하였습니다!");
     }
+    console.log(errorInputs);
   };
 
   // 수정하기 클릭
@@ -156,20 +142,23 @@ export default function BoardWrite(props: IBoardWriteProps) {
     const myBoardAddress: IMyBoardAddressInput = {};
     const myVariables: IMyVariablesInput = { boardAddress: myBoardAddress };
 
-    if (title) myVariables.title = title;
-    if (contents) myVariables.contents = contents;
-    if (youtubeUrl) myVariables.youtubeUrl = youtubeUrl;
-    if (images) myVariables.images = images;
+    if (inputs.title) myVariables.title = inputs.title;
+    if (inputs.contents) myVariables.contents = inputs.contents;
+    if (inputs.youtubeUrl) myVariables.youtubeUrl = inputs.youtubeUrl;
+    if (inputs.images) myVariables.images = inputs.images;
 
-    if (zipcode) myBoardAddress.zipcode = zipcode;
-    if (address) myBoardAddress.address = address;
-    if (addressDetail) myBoardAddress.addressDetail = addressDetail;
+    if (inputsBoardAddress.zipcode)
+      myBoardAddress.zipcode = inputsBoardAddress.zipcode;
+    if (inputsBoardAddress.address)
+      myBoardAddress.address = inputsBoardAddress.address;
+    if (inputsBoardAddress.addressDetail)
+      myBoardAddress.addressDetail = inputsBoardAddress.addressDetail;
 
     try {
       await updateBoard({
         variables: {
           updateBoardInput: myVariables,
-          password: password,
+          password: inputs.password,
           boardId: router.query.boardId,
         },
       });
@@ -185,21 +174,12 @@ export default function BoardWrite(props: IBoardWriteProps) {
     <BoardWriteUI
       data={props.data}
       isEdit={props.isEdit}
-      zipcode={zipcode}
-      address={address}
       isActive={isActive}
-      writerError={writerError}
-      passwordError={passwordError}
-      titleError={titleError}
-      contentsError={contentsError}
-      setZipcode={setZipcode}
-      setAddress={setAddress}
-      onChangeWriter={onChangeWriter}
-      onChangePassword={onChangePassword}
-      onChangeTitle={onChangeTitle}
-      onChangeContents={onChangeContents}
-      onChangeYoutubeUrl={onChangeYoutubeUrl}
-      onChangeAddressDetail={onChangeAddressDetail}
+      errorInputs={errorInputs}
+      inputsBoardAddress={inputsBoardAddress}
+      setInputsBoardAddress={setInputsBoardAddress}
+      onChangeInputs={onChangeInputs}
+      onChangeInputsBoardAddress={onChangeInputsBoardAddress}
       onClickSubmit={onClickSubmit}
       onClickUpdate={onClickUpdate}
     />

@@ -9,7 +9,7 @@ export default function BoardCommentListUI(props: IBoardCommentListUIProps) {
       {props.data?.fetchBoardComments.map((el) => (
         // el을 자식컴포넌트로 전달.
         <BoardCommentListUIItem key={el._id} el={el} />
-      ))}
+      )) || <div></div>}
     </InfiniteScroll>
   );
 }

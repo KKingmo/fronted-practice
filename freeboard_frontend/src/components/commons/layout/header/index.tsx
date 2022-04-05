@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { rgbToHex } from "@material-ui/core";
 
 const Header = styled.div`
   background: #ffffff;
@@ -43,12 +42,12 @@ const HeaderHr = styled.div`
   & > div:first-of-type {
     width: 50%;
     height: 5px;
-    background: rgb(52, 121, 77);
+    background: #34794d;
   }
   & > div:last-of-type {
     width: 50%;
     height: 5px;
-    background: rgb(245, 218, 79);
+    background: #f5da4f;
   }
 `;
 
