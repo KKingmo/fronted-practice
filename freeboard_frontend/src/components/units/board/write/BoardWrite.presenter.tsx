@@ -16,6 +16,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
       zipcode: data.zonecode,
     }));
   };
+  console.log(props.imageUrl);
   return (
     <>
       <S.Wrapper>
@@ -142,18 +143,17 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
           </S.ParentDiv>
           <S.ParentDiv>
             <S.AttachPhoto>
-              <S.ChildDiv5>
+              <S.ChildDiv5 onClick={props.onClickImage}>
                 <S.Span>+</S.Span>
                 <S.Span>Upload</S.Span>
               </S.ChildDiv5>
-              <S.ChildDiv5>
-                <S.Span>+</S.Span>
-                <S.Span>Upload</S.Span>
-              </S.ChildDiv5>
-              <S.ChildDiv5>
-                <S.Span>+</S.Span>
-                <S.Span>Upload</S.Span>
-              </S.ChildDiv5>
+              <input
+                style={{ display: "none" }}
+                type="file"
+                onChange={props.onChangeFile}
+                ref={props.fileRef}
+              />
+              <img style={{ height: "300px" }} src={`${props.imageUrl}`} />
             </S.AttachPhoto>
           </S.ParentDiv>
           <S.ParentDiv>

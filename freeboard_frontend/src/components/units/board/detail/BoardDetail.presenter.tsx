@@ -9,6 +9,7 @@ import { getDate } from "../../../../commons/libraries/utils";
 import ReactPlayer from "react-player";
 
 export default function BoardDetailUI(props: IBoardDetailUIProps) {
+  console.log(props.data);
   return (
     <>
       <S.Wrapper>

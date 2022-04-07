@@ -1,21 +1,54 @@
 import { useRouter } from "next/router";
 import { useMutation } from "@apollo/client";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useRef } from "react";
 import BoardWriteUI from "./BoardWrite.presenter";
-import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
+import { CREATE_BOARD, UPDATE_BOARD, UPLOAD_FILE } from "./BoardWrite.queries";
 import {
   IBoardWriteProps,
   IMyVariablesInput,
   IMyBoardAddressInput,
 } from "./BoardWrite.types";
 import { success } from "../../../../commons/libraries/utils";
+import { checkFileValidation } from "../../../../commons/libraries/validation";
 
 export default function BoardWrite(props: IBoardWriteProps) {
   const router = useRouter();
   const [createBoard] = useMutation(CREATE_BOARD);
   const [updateBoard] = useMutation(UPDATE_BOARD);
   const [isActive, setIsActive] = useState(false);
+  ///////////////
+  const fileRef = useRef<HTMLInputElement>(null);
+  const [imageUrl, setImageUrl] = useState<String | undefined>("");
+  const [uploadFile] = useMutation(UPLOAD_FILE);
 
+  /// 이미지 업로드
+  const onChangeFile = async (event: ChangeEvent<HTMLInputElement>) => {
+    // 파일을 여러개 선택할 수 있기 때문에 files이다 또한 이를 이용하려면 input에 multiple옵션을 넣어줘야한다.
+    const file = event.target.files?.[0];
+    console.log(file);
+
+    const isValid = checkFileValidation(file);
+    if (!isValid) return;
+
+    try {
+      const result = await uploadFile({
+        variables: { file: file },
+      });
+      console.log(result.data?.uploadFile.url);
+
+      setImageUrl(
+        `https://storage.googleapis.com/${result.data?.uploadFile.url}`
+      );
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  const onClickImage = () => {
+    fileRef.current?.click();
+  };
+
+  ///////////////////////////////////
   // 게시글 입력(주소)
   const [inputsBoardAddress, setInputsBoardAddress] = useState({
     zipcode: "",
@@ -80,6 +113,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
           createBoardInput: {
             ...inputs,
             boardAddress: { ...inputsBoardAddress },
+            images: imageUrl,
           },
         },
       });
@@ -155,6 +189,10 @@ export default function BoardWrite(props: IBoardWriteProps) {
       onChangeInputsBoardAddress={onChangeInputsBoardAddress}
       onClickSubmit={onClickSubmit}
       onClickUpdate={onClickUpdate}
+      fileRef={fileRef}
+      imageUrl={imageUrl}
+      onChangeFile={onChangeFile}
+      onClickImage={onClickImage}
     />
   );
 }
