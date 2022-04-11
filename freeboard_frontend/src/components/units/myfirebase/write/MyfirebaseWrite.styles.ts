@@ -14,3 +14,7 @@ export const Wrapper = styled.div`
 export const MyInput = styled.input`
   width: 200px;
 `;
+
+export const Contents = styled.textarea`
+  width: 200px;
+`;

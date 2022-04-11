@@ -2,8 +2,12 @@ import * as S from "./BoardList.styles";
 import { IBoardListUIProps } from "./BoardList.types";
 import Pagination from "../../../commons/pagination/Pagination.container";
 import { getDate } from "../../../../commons/libraries/utils";
+import { useState } from "react";
 
 export default function BoardListUI(props: IBoardListUIProps) {
+  const [current, setCurrent] = useState(1);
+  const lastPage = Math.ceil(props.dataBoardsCount?.fetchBoardsCount / 10);
+  console.log(props.dataBoardsCount?.fetchBoardsCount);
   return (
     <S.Wrapper>
       <S.BoardsBestTitle>베스트 게시글</S.BoardsBestTitle>
@@ -38,6 +42,9 @@ export default function BoardListUI(props: IBoardListUIProps) {
           </S.BoardsBestItem>
         ))}
       </S.BoardsBestList>
+      <div>
+        검색어입력 : <input type="text" onChange={props.onChangeSearch} />
+      </div>
       <S.TableTop />
       <S.Row>
         <S.ColumnHeaderBasic>번호</S.ColumnHeaderBasic>
@@ -48,7 +55,11 @@ export default function BoardListUI(props: IBoardListUIProps) {
       {props.data?.fetchBoards.map((el, index) => (
         <S.Row key={el._id}>
           <S.ColumnBasic>
-            {Number(props.data?.fetchBoards.length) - index}
+            {/* 수정필요 */}
+            {Number(
+              props.dataBoardsCount?.fetchBoardsCount -
+                (current - 1) * props.data?.fetchBoards.length
+            ) - index}
           </S.ColumnBasic>
           {/* <input type="text" id="bbb" onClick={props.onClickMoveToBoardDetail}/> */}
           <S.ColumnTitle id={el._id} onClick={props.onClickMoveToBoardDetail}>
@@ -60,7 +71,12 @@ export default function BoardListUI(props: IBoardListUIProps) {
       ))}
       <S.TableBottom />
       <S.Footer>
-        <Pagination refetch={props.refetch} lastPage={props.lastPage} />
+        <Pagination
+          refetch={props.refetch}
+          lastPage={lastPage}
+          current={current}
+          setCurrent={setCurrent}
+        />
         <S.Button onClick={props.onClickMoveToBoardNew}>
           <S.PencilIcon />
           게시물 등록하기

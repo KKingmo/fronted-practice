@@ -11,10 +11,24 @@ import {
   IQueryFetchBoardsArgs,
   IQueryFetchBoardsCountArgs,
 } from "../../../../commons/types/generated/types";
-import { MouseEvent } from "react";
+import { MouseEvent, useState } from "react";
+import { debounce } from "lodash";
 
 export default function BoardList() {
   const router = useRouter();
+  const [keyword, setKeyword] = useState("");
+
+  // 검색기능 debounce
+  const getDebounce = debounce((data) => {
+    refetch({ search: data, page: 1 });
+    refetchA({ search: data });
+    setKeyword(data);
+  }, 200);
+
+  // 입력할 때마다 getDebounce가 실행된다.
+  const onChangeSearch = (event: ChangeEvent<HTMLInputElement>) => {
+    getDebounce(event.target.value);
+  };
 
   // FetchBoards useQuery
   const { data, refetch } = useQuery<
@@ -23,11 +37,10 @@ export default function BoardList() {
   >(FETCH_BOARDS);
 
   // BoardsCount useQuery
-  const { data: dataBoardsCount } = useQuery<
+  const { data: dataBoardsCount, refetch: refetchA } = useQuery<
     Pick<IQuery, "fetchBoardsCount">,
     IQueryFetchBoardsCountArgs
   >(FETCH_BOARDS_COUNT);
-  const lastPage = Math.ceil(dataBoardsCount?.fetchBoardsCount / 10);
 
   // BoardsOfTheBest useQuery
   const { data: dataBoardsOfTheBest } = useQuery<
@@ -56,10 +69,13 @@ export default function BoardList() {
       data={data}
       dataBoardsOfTheBest={dataBoardsOfTheBest}
       refetch={refetch}
-      lastPage={lastPage}
+      refetchA={refetchA}
+      dataBoardsCount={dataBoardsCount}
       onClickMoveToBestBoardDetail={onClickMoveToBestBoardDetail}
       onClickMoveToBoardNew={onClickMoveToBoardNew}
       onClickMoveToBoardDetail={onClickMoveToBoardDetail}
+      keyword={keyword}
+      onChangeSearch={onChangeSearch}
     />
   );
 }

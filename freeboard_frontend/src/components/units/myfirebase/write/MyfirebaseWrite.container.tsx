@@ -27,7 +27,7 @@ export default function MyfirebaseWrite() {
   function onChangeTitle(event: ChangeEvent<HTMLInputElement>) {
     setTitle(event.target.value);
   }
-  function onChangeContents(event: ChangeEvent<HTMLInputElement>) {
+  function onChangeContents(event: ChangeEvent<HTMLTextAreaElement>) {
     setContents(event.target.value);
   }
 

@@ -1,21 +1,32 @@
-import { MyInput, Wrapper } from "./MyfirebaseWrite.styles";
+import * as S from "./MyfirebaseWrite.styles";
 import { IMyfirebaseWriteUIProps } from "./MyfirebaseWrite.types";
 
 export default function MyfirebaseWriteUI(props: IMyfirebaseWriteUIProps) {
   return (
-    <Wrapper>
+    <S.Wrapper>
       <div>
-        작성자: <MyInput type="text" onChange={props.onChangeWriter} />
+        <S.MyInput
+          type="text"
+          onChange={props.onChangeWriter}
+          placeholder="작성자를 입력하세요"
+        />
       </div>
       <div>
-        제 목: <MyInput type="text" onChange={props.onChangeTitle} />
+        <S.MyInput
+          type="text"
+          onChange={props.onChangeTitle}
+          placeholder="제목을 입력하세요"
+        />
       </div>
       <div>
-        내 용: <MyInput type="text" onChange={props.onChangeContents} />
+        <S.Contents
+          onChange={props.onChangeContents}
+          placeholder="내용을 입력하세요"
+        />
       </div>
       <div>
         <button onClick={props.onClickSubmit}>등록하기</button>
       </div>
-    </Wrapper>
+    </S.Wrapper>
   );
 }

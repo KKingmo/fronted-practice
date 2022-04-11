@@ -3,13 +3,13 @@ import { useState } from "react";
 
 export default function Pagination(props) {
   const [startPage, setStartPage] = useState(1);
-  const [current, setCurrent] = useState(1);
+
   const [isActivePrev, setIsActivePrev] = useState(false);
   const [isActiveNext, setIsActiveNext] = useState(true);
 
   const onClickPage = (event) => {
     props.refetch({ page: Number(event.target.id) });
-    setCurrent((prev) => Number(event.target.id));
+    props.setCurrent((prev) => Number(event.target.id));
     console.log(event.target.id);
   };
 
@@ -29,7 +29,7 @@ export default function Pagination(props) {
     setIsActiveNext(true);
     setStartPage((prev) => prev - 10);
     props.refetch({ page: Number(startPage - 10) });
-    setCurrent((prev) => Number(startPage - 10));
+    props.setCurrent((prev) => Number(startPage - 10));
   };
 
   const onClickNextPage = () => {
@@ -44,7 +44,7 @@ export default function Pagination(props) {
     if (startPage + 10 > props.lastPage) return;
     setStartPage((prev) => prev + 10);
     props.refetch({ page: Number(startPage + 10) });
-    setCurrent((prev) => Number(startPage + 10));
+    props.setCurrent((prev) => Number(startPage + 10));
   };
 
   return (
@@ -54,7 +54,7 @@ export default function Pagination(props) {
       onClickNextPage={onClickNextPage}
       isActivePrev={isActivePrev}
       isActiveNext={isActiveNext}
-      current={current}
+      current={props.current}
       startPage={startPage}
       lastPage={props.lastPage}
     />

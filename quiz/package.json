@@ -26,6 +26,7 @@
     "react-infinite-scroller": "^1.2.5",
     "react-player": "^2.10.0",
     "react-slick": "^0.28.1",
+    "recoil": "^0.7.0",
     "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
