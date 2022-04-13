@@ -6,18 +6,13 @@ export default function Home() {
   return (
     <div>
       <div>
-        <a href="http://localhost:3000/quiz/quiz0411A">
-          4월11일 Quiz! 1-1 ~ 1-2 주소는 여기입니다.
+        <a href="http://localhost:3000/example/hoc/login">
+          3-1. HOC로 권한분기로직 withAuth로 분리하기
         </a>
       </div>
       <div>
-        <a href="http://localhost:3000/recoil/new">
-          4월11일 Quiz! 1-3 recoil/new 주소는 여기입니다.
-        </a>
-      </div>
-      <div>
-        <a href="http://localhost:3000/recoil/edit">
-          4월11일 Quiz! 1-3 recoil/edit 주소는 여기입니다.
+        <a href="http://localhost:3000/quiz/quiz0413">
+          3-2. event.target.id 방식에서 HOF 방식으로 변경하기
         </a>
       </div>
     </div>

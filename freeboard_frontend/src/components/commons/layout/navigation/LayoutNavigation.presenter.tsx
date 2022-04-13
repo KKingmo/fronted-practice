@@ -6,7 +6,7 @@ const NAVIGATION_MENUS = [
   { name: "파이어베이스게시판", page: "/myfirebase" },
   { name: "곰표강아지", page: "/openapis" },
   { name: "곰표게시판", page: "/boards" },
-  { name: "곰표상품", page: "/" },
+  { name: "곰표마켓", page: "/" },
   { name: "마이페이지", page: "/" },
 ];
 
