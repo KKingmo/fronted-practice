@@ -5,12 +5,13 @@ import {
   ApolloProvider,
   InMemoryCache,
 } from "@apollo/client";
-import { accessTokenState } from "../../../commons/store";
+import { accessTokenState, userInfoState } from "../../../commons/store";
 import { useRecoilState } from "recoil";
 import { useEffect } from "react";
 
 export default function ApolloSetting(props) {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+  const [, setUserInfo] = useRecoilState(userInfoState);
 
   // 1. 더 이상 지원되지 않음!
   // if(process.browser) {
@@ -30,8 +31,11 @@ export default function ApolloSetting(props) {
 
   // 3. 세번째 방법!!
   useEffect(() => {
-    const myLocalStorageAccessToken = localStorage.getItem("accessToken");
-    setAccessToken(myLocalStorageAccessToken || "");
+    const accessToken = localStorage.getItem("accessToken");
+    // 문자열을 다시 객체로 바꾸어줘야한다.
+    const userInfo = JSON.parse(localStorage.getItem("userInfo") || "{}");
+    setAccessToken(accessToken || "");
+    setUserInfo(userInfo);
   }, []);
 
   const uploadLink = createUploadLink({
