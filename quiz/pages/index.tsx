@@ -1,23 +1,15 @@
-import Head from "next/head";
-import Image from "next/image";
-import styles from "../styles/Home.module.css";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function Home() {
+  const router = useRouter();
+  useEffect(() => {
+    router.push("/quiz/quiz06/boards");
+  });
+
   return (
     <div>
-      <div>
-        <a href="http://localhost:3000/quiz/quiz0414-1">
-          4-1. react-hook-form 적용하기
-        </a>
-      </div>
-      <div>
-        <a href="http://localhost:3000/quiz/quiz0414-2">4-2. yup 적용하기</a>
-      </div>
-      <div>
-        <a href="http://localhost:3000/quiz/quiz0414-3">
-          4-3. 공통 컴포넌트 만들기
-        </a>
-      </div>
+      <div>gogo quiz0418 folder</div>
     </div>
   );
 }
