@@ -1,15 +1,23 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
+const quizLink = "/quiz/quiz06/editor/writer";
+
 export default function Home() {
   const router = useRouter();
   useEffect(() => {
-    router.push("/quiz/quiz06/boards");
+    router.push(quizLink);
   });
+
+  const onClick = () => {
+    router.push(quizLink);
+  };
 
   return (
     <div>
-      <div>gogo quiz0418 folder</div>
+      <div onClick={onClick} style={{ cursor: "pointer" }}>
+        클릭하면 갑니다~ gogo "/quiz/quiz06/editor/writer"
+      </div>
     </div>
   );
 }
