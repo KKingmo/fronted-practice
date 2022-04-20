@@ -111,4 +111,8 @@ export const globalStyles = css`
   html {
     font-size: 18px;
   }
+  ul {
+    margin: 0;
+    list-style: none;
+  }
 `;

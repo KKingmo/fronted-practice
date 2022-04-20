@@ -1,11 +1,9 @@
 import LayoutHeaderUI from "./LayoutHeader.presenter";
 import { useRouter } from "next/router";
+import { useMoveToPage } from "../../hooks/useMoveToPage";
 
 export default function LayoutHeader() {
   const router = useRouter();
-
-  const onClickMenu = (event) => {
-    if (event.target) router.push(event.currentTarget.id);
-  };
-  return <LayoutHeaderUI onClickMenu={onClickMenu} />;
+  const { moveToPage } = useMoveToPage();
+  return <LayoutHeaderUI moveToPage={moveToPage} router={router} />;
 }
