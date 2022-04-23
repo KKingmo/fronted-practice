@@ -108,8 +108,12 @@ export const globalStyles = css`
     color: #000000;
     text-decoration: none;
   }
-  html {
+  html,
+  body {
     font-size: 18px;
+    width: 100vw;
+    height: 100vh;
+    background: #f6f4f4;
   }
   ul {
     margin: 0;

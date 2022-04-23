@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-const quizLink = "/quiz/quiz06/editor/writer";
+const quizLink = "/quiz/quiz06/payment/login";
 
 export default function Home() {
   const router = useRouter();
@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <div>
       <div onClick={onClick} style={{ cursor: "pointer" }}>
-        클릭하면 갑니다~ gogo "/quiz/quiz06/editor/writer"
+        클릭하면 갑니다~ gogo "/quiz/quiz06/payment/login"
       </div>
     </div>
   );

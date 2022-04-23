@@ -26,6 +26,14 @@ export default function LayoutHeaderUI(props) {
             </li>
           ))}
         </S.Navigation>
+        {props.accessToken ? (
+          <S.Login onClick={props.onClickLogout}>로그아웃</S.Login>
+        ) : (
+          <S.Login onClick={props.moveToPage("/login")}>로그인</S.Login>
+        )}
+        {props.userInfo.email && (
+          <S.UserInfo>{props.userInfo?.email}</S.UserInfo>
+        )}
       </S.Wrapper>
     </S.Container>
   );
