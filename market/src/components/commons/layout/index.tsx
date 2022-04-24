@@ -9,11 +9,12 @@ const Container = styled.div`
 `;
 
 const Body = styled.div`
-  width: 100%;
+  width: 80%;
   height: auto;
+  margin: 0 auto;
 `;
 
-const HIDDEN_BANNER = ["/login"];
+const HIDDEN_BANNER = ["/login", "/signUp"];
 
 export default function Layout(props) {
   const router = useRouter();

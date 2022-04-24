@@ -28,5 +28,11 @@ interface IProps {
 }
 
 export default function Input01(props: IProps) {
-  return <Input type={props.type} {...props.register} />;
+  return (
+    <Input
+      type={props.type}
+      {...props.register}
+      placeholder={props.placeholder}
+    />
+  );
 }

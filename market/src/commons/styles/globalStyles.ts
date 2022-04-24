@@ -114,9 +114,24 @@ export const globalStyles = css`
     width: 100vw;
     height: 100vh;
     background: #f6f4f4;
+    overflow-x: hidden;
   }
   ul {
     margin: 0;
     list-style: none;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0.4rem; /* 스크롤바의 너비 */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    height: 5%;
+    background: #f5da4f; /* 스크롤바의 색상 */
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f2f2f2; /*스크롤바 뒷 배경 색상*/
   }
 `;

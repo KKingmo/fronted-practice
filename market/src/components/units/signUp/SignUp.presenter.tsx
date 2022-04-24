@@ -1,47 +1,51 @@
 import * as S from "./SignUp.styles";
 import Input01 from "../../commons/inputs/01";
+import Button01 from "../../commons/buttons/01";
 
 export default function SignUpUI(props) {
   return (
     <form onSubmit={props.handleSubmit(props.onClickSignUp)}>
       <S.Wrapper>
-        <h3>가입하기</h3>
+        <S.Background>
+          <S.Shape></S.Shape>
+          <S.Shape></S.Shape>
+        </S.Background>
+        <S.Form>
+          <h3>가입하기</h3>
+          <Input01
+            type="text"
+            placeholder="이메일을 입력해주세요."
+            register={props.register("email")}
+          />
+          <S.Error>{props.formState.errors.email?.message}</S.Error>
 
-        <Input01
-          type="text"
-          placeholder="이메일을 입력해주세요."
-          register={props.register("email")}
-        />
-        <div>{props.formState.errors.email?.message}</div>
-
-        <div>
-          <input
+          <Input01
             type="text"
             placeholder="이름 입력해주세요."
-            {...props.register("name")}
+            register={props.register("name")}
           />
-          <div>{props.formState.errors.name?.message}</div>
-        </div>
+          <S.Error>{props.formState.errors.name?.message}</S.Error>
 
-        <div>
-          <input
+          <Input01
             type="password"
             placeholder="비밀번호를 입력해주세요."
-            {...props.register("password")}
+            register={props.register("password")}
           />
-          <div>{props.formState.errors.password?.message}</div>
-        </div>
+          <S.Error>{props.formState.errors.password?.message}</S.Error>
 
-        <div>
-          <input
+          <Input01
             type="password"
             placeholder="비밀번호를 입력해주세요."
-            {...props.register("confirmPassword")}
+            register={props.register("confirmPassword")}
           />
-          <div>{props.formState.errors.confirmPassword?.message}</div>
-        </div>
+          <S.Error>{props.formState.errors.confirmPassword?.message}</S.Error>
 
-        <button type="submit">가입하기</button>
+          <Button01
+            title="회원가입"
+            type="submit"
+            isActive={props.formState.isValid}
+          />
+        </S.Form>
       </S.Wrapper>
     </form>
   );

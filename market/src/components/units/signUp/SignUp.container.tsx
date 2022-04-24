@@ -37,7 +37,7 @@ export default function SignUp() {
 
   const onClickSignUp = async (aaa) => {
     const { confirmPassword, ...data } = aaa;
-    // 로그인하기
+    // 가입하기
     try {
       const result = await createUser({
         variables: {
