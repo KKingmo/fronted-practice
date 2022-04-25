@@ -1,6 +1,7 @@
 import { getDate } from "../../../../commons/libraries/utils";
 import * as S from "./ProductDetail.styles";
 import Slider01 from "../../../commons/sliders/01";
+import DOMPurify from "dompurify";
 
 export default function ProductDetailUI(props) {
   console.log(props.data);
@@ -38,6 +39,15 @@ export default function ProductDetailUI(props) {
       <S.SliderWrapper>
         <Slider01 images={props.data?.images} />
       </S.SliderWrapper>
+      {typeof window !== "undefined" ? (
+        <div
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(props.data?.contents),
+          }}
+        ></div>
+      ) : (
+        <div></div>
+      )}
 
       <S.TagsWrapper>
         {props.data?.tags?.map((e, i) => (

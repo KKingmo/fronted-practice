@@ -1,23 +1,14 @@
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import styled from "@emotion/styled";
 
-const quizLink = "/quiz/quiz06/payment/login";
+const Button = styled.button`
+  margin: 20px;
+`;
 
 export default function Home() {
-  const router = useRouter();
-  useEffect(() => {
-    router.push(quizLink);
-  });
-
-  const onClick = () => {
-    router.push(quizLink);
-  };
-
   return (
     <div>
-      <div onClick={onClick} style={{ cursor: "pointer" }}>
-        클릭하면 갑니다~ gogo "/quiz/quiz06/payment/login"
-      </div>
+      <div>quiz1-1 = "/quiz/quiz07/callback"</div>
+      <div>quiz2-1 = "/quiz/quiz07/refreshToken"</div>
     </div>
   );
 }

@@ -5,3 +5,13 @@ export const ImagesWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
 `;
+
+export const Form = styled.form`
+  width: 100%;
+`;
+
+export const ReactQuillWrapper = styled.div`
+  .ql-toolbar:first-of-type {
+    display: none;
+  }
+`;

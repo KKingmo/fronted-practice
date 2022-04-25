@@ -10,14 +10,17 @@ import { useState } from "react";
 const schema = yup.object({
   name: yup.string().required("상품명은 필수 입력 사항입니다."),
   remarks: yup.string().required("한줄요약은 필수 입력 사항입니다."),
-  contents: yup.string().required("상품 설명은 필수 입력 사항입니다."),
   price: yup.number().required("판매 가격은 필수 입력 사항입니다."),
+  contents: yup
+    .string()
+    .min(5, "상품설명을 5자 이상 작성해주세요.")
+    .required("상품설명은 필수 입력 사항입니다."),
 });
 
 export default function ProductWrite(props) {
   const router = useRouter();
   const [createUsedItem] = useMutation(CREATE_USED_ITEM);
-  const { register, handleSubmit, formState } = useForm({
+  const { register, handleSubmit, formState, setValue, trigger } = useForm({
     resolver: yupResolver(schema),
     mode: "onChange",
   });
@@ -33,11 +36,24 @@ export default function ProductWrite(props) {
         .filter((e) => e !== "");
     }
 
-    console.log(data);
     try {
       const result = await createUsedItem({
         variables: {
-          createUseditemInput: { ...data, images: imageUrls },
+          createUseditemInput: {
+            name: data.name,
+            remarks: data.remarks,
+            contents: data.contents,
+            price: data.price,
+            tags: data.tags,
+            images: imageUrls,
+            useditemAddress: {
+              zipcode: data.zipcode,
+              address: data.address,
+              addressDetail: data.addressDetail,
+              lat: parseFloat(data.lat),
+              lng: parseFloat(data.lng),
+            },
+          },
         },
       });
       console.log(result);
@@ -46,6 +62,12 @@ export default function ProductWrite(props) {
     } catch (error) {
       alert(error.message);
     }
+  };
+
+  // 에디터 입력 값 form으로 넘기기
+  const onChangeContents = (value: string) => {
+    setValue("contents", value === "<p><br></p>" ? "" : value);
+    trigger("contents");
   };
 
   // 이미지 업로드
@@ -64,6 +86,8 @@ export default function ProductWrite(props) {
       onClickSubmit={onClickSubmit}
       onChangeFileUrls={onChangeFileUrls}
       imageUrls={imageUrls}
+      onChangeContents={onChangeContents}
+      setValue={setValue}
     />
   );
 }

@@ -42,9 +42,8 @@ export default function UserLogin() {
           ...data,
         },
       });
-      const accessToken = result.data.loginUser.accessToken;
+      const accessToken = result.data.loginUserExample.accessToken;
       setAccessToken(accessToken);
-      localStorage.setItem("accessToken", accessToken);
 
       // 유저정보 받아오기
       const resultUserInfo = await client.query({

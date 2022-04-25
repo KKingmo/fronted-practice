@@ -93,7 +93,7 @@ export default function ProductListUI(props) {
               </S.ProductWrapper>
               <S.PriceWrapper>
                 <span>￦</span>
-                {el.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원
+                {el.price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원
               </S.PriceWrapper>
             </S.ProductsWrapper>
           )) || <div></div>}
