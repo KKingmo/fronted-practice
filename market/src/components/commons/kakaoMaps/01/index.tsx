@@ -26,7 +26,11 @@ export default function KakaoMap01(props) {
     document.head.appendChild(script);
 
     script.onload = () => {
-      if (!searchAddress.address) return;
+      const mapAddress = searchAddress.address
+        ? searchAddress.address
+        : props.defaultValue?.address || "";
+      if (!mapAddress) return;
+
       window.kakao.maps.load(() => {
         const options = {
           // 지도를 생성할 때 필요한 기본 옵션
@@ -42,34 +46,31 @@ export default function KakaoMap01(props) {
         const geocoder = new window.kakao.maps.services.Geocoder();
 
         // 주소로 좌표를 검색합니다
-        geocoder.addressSearch(
-          searchAddress.address,
-          function (result, status) {
-            // 정상적으로 검색이 완료됐으면
-            if (status === window.kakao.maps.services.Status.OK) {
-              const coords = new window.kakao.maps.LatLng(
-                result[0].y,
-                result[0].x
-              );
+        geocoder.addressSearch(mapAddress, function (result, status) {
+          // 정상적으로 검색이 완료됐으면
+          if (status === window.kakao.maps.services.Status.OK) {
+            const coords = new window.kakao.maps.LatLng(
+              result[0].y,
+              result[0].x
+            );
 
-              // 결과값으로 받은 위치를 마커로 표시합니다
-              const marker = new window.kakao.maps.Marker({
-                map: map,
-                position: coords,
-              });
+            // 결과값으로 받은 위치를 마커로 표시합니다
+            const marker = new window.kakao.maps.Marker({
+              map: map,
+              position: coords,
+            });
 
-              // 마커가 지도 위에 표시되도록 설정합니다
-              marker.setMap(map);
+            // 마커가 지도 위에 표시되도록 설정합니다
+            marker.setMap(map);
 
-              // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-              map.setCenter(coords);
-              setMapLatLng([coords.Ma, coords.La]);
-            }
+            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+            map.setCenter(coords);
+            setMapLatLng([coords.Ma, coords.La]);
           }
-        );
+        });
       });
     };
-  }, [searchAddress]);
+  }, [searchAddress, props.defaultValue?.address]);
 
   // 우편번호검색 Toggle
   const onToggleModal = (data) => {
@@ -90,7 +91,7 @@ export default function KakaoMap01(props) {
             <DaumPostcode onComplete={onToggleModal} />
           </Modal>
         )}
-        {searchAddress.address ? (
+        {searchAddress.address || props.defaultValue?.address ? (
           <S.MapContainer
             ref={container}
             style={{ width: 390, height: 260 }}
@@ -108,7 +109,9 @@ export default function KakaoMap01(props) {
           <input
             type="text"
             onChange={props.setValue("lat", mapLatLng[0])}
-            value={mapLatLng[0] || ""}
+            defaultValue={
+              mapLatLng[0] ? mapLatLng[0] : props.defaultValue?.lat || ""
+            }
             readOnly
           />
         </div>
@@ -117,7 +120,9 @@ export default function KakaoMap01(props) {
           <input
             type="text"
             onChange={props.setValue("lng", mapLatLng[1])}
-            value={mapLatLng[1] || ""}
+            defaultValue={
+              mapLatLng[1] ? mapLatLng[1] : props.defaultValue?.lng || ""
+            }
             readOnly
           />
         </div>
@@ -129,19 +134,28 @@ export default function KakaoMap01(props) {
         <input
           type="text"
           onChange={props.setValue("address", searchAddress?.address)}
-          value={searchAddress?.address || ""}
+          defaultValue={
+            searchAddress?.address
+              ? searchAddress?.address
+              : props.defaultValue?.address || ""
+          }
           readOnly
         />
         <input
           type="text"
           onChange={props.setValue("zipcode", searchAddress?.zipcode)}
-          value={searchAddress?.zipcode || ""}
+          defaultValue={
+            searchAddress?.zipcode
+              ? searchAddress?.zipcode
+              : props.defaultValue?.zipcode || ""
+          }
           readOnly
         />
         <input
           type="text"
           {...props.register("addressDetail")}
           placeholder="상세주소를 입력해주세요."
+          defaultValue={props.defaultValue?.addressDetail || ""}
         />
       </S.ContainerRight>
     </S.Wrapper>

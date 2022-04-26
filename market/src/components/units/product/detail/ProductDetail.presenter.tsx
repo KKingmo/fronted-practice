@@ -72,19 +72,22 @@ export default function ProductDetailUI(props) {
       </S.MapWrapper>
       {userInfo._id === props.data?.seller._id && (
         <S.ButtonWrapper>
-          <Button02 title="목록으로" />
+          <Button02 title="취소하기" onClick={moveToPage(`/shop`)} />
           <Button02
             title="수정하기"
             lightColor={true}
             onClick={moveToPage(`/shop/${router.query.productId}/edit`)}
           />
-          <Button02 title="삭제하기" />
+          <Button02
+            title="삭제하기"
+            onClick={props.onClickDelete(props.data?._id)}
+          />
         </S.ButtonWrapper>
       )}
 
       {userInfo._id !== props.data?.seller._id && (
         <S.ButtonWrapper>
-          <Button02 title="목록으로" />
+          <Button02 title="목록으로" onClick={moveToPage(`/shop`)} />
           <Button02 title="구매하기" lightColor={true} />
         </S.ButtonWrapper>
       )}

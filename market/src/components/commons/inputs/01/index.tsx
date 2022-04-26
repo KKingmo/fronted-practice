@@ -33,6 +33,7 @@ export default function Input01(props: IProps) {
       type={props.type}
       {...props.register}
       placeholder={props.placeholder}
+      defaultValue={props.defaultValue || ""}
     />
   );
 }
