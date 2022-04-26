@@ -55,7 +55,6 @@ export default function UserLogin() {
         },
       });
       const userInfo = resultUserInfo.data.fetchUserLoggedIn;
-      console.log(userInfo);
       setUserInfo(userInfo);
       // 문자열로 변환해서 로컬스토리지에 넣기
       localStorage.setItem("userInfo", JSON.stringify(userInfo));

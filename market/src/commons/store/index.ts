@@ -12,8 +12,5 @@ export const accessTokenState = atom({
 
 export const userInfoState = atom({
   key: "userInfoState",
-  default: {
-    email: "",
-    name: "",
-  },
+  default: {},
 });

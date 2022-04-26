@@ -103,6 +103,7 @@ export default function ProductListUI(props) {
         <Button02
           title="상품 등록하기"
           onClick={props.moveToPage("/shop/new")}
+          lightColor={false}
         />
       </S.ButtonWrapper>
     </S.Wrapper>

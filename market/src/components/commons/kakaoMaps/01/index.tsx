@@ -8,7 +8,8 @@ declare const window: typeof globalThis & {
 };
 
 export default function KakaoMap01(props) {
-  const container = useRef(); // 카카오 지도 ref
+  const container = useRef(null); // 카카오 지도 ref
+
   const [mapLatLng, setMapLatLng] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [searchAddress, setSearchAddress] = useState({
@@ -62,7 +63,7 @@ export default function KakaoMap01(props) {
 
               // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
               map.setCenter(coords);
-              setMapLatLng([coords.La, coords.Ma]);
+              setMapLatLng([coords.Ma, coords.La]);
             }
           }
         );
@@ -107,7 +108,8 @@ export default function KakaoMap01(props) {
           <input
             type="text"
             onChange={props.setValue("lat", mapLatLng[0])}
-            value={mapLatLng[0]}
+            value={mapLatLng[0] || ""}
+            readOnly
           />
         </div>
         <div>
@@ -115,7 +117,8 @@ export default function KakaoMap01(props) {
           <input
             type="text"
             onChange={props.setValue("lng", mapLatLng[1])}
-            value={mapLatLng[1]}
+            value={mapLatLng[1] || ""}
+            readOnly
           />
         </div>
 
@@ -126,12 +129,14 @@ export default function KakaoMap01(props) {
         <input
           type="text"
           onChange={props.setValue("address", searchAddress?.address)}
-          value={searchAddress?.address}
+          value={searchAddress?.address || ""}
+          readOnly
         />
         <input
           type="text"
           onChange={props.setValue("zipcode", searchAddress?.zipcode)}
-          value={searchAddress?.zipcode}
+          value={searchAddress?.zipcode || ""}
+          readOnly
         />
         <input
           type="text"

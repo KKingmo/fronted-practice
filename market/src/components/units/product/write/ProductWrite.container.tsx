@@ -1,6 +1,6 @@
 import ProductWriteUI from "./ProductWrite.presenter";
 import { useRouter } from "next/router";
-import { CREATE_USED_ITEM } from "./ProductWrite.queries";
+import { CREATE_USED_ITEM, UPDATE_USED_ITEM } from "./ProductWrite.queries";
 import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -18,6 +18,7 @@ const schema = yup.object({
 });
 
 export default function ProductWrite(props) {
+  // console.log(props.data);
   const router = useRouter();
   const [createUsedItem] = useMutation(CREATE_USED_ITEM);
   const { register, handleSubmit, formState, setValue, trigger } = useForm({
@@ -56,9 +57,8 @@ export default function ProductWrite(props) {
           },
         },
       });
-      console.log(result);
       alert("상품 등록에 성공하였습니다.");
-      router.push("/shop");
+      router.push(`/shop/${result.data.createUseditem._id}`);
     } catch (error) {
       alert(error.message);
     }

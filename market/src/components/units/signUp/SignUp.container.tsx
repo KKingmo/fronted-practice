@@ -39,12 +39,11 @@ export default function SignUp() {
     const { confirmPassword, ...data } = aaa;
     // 가입하기
     try {
-      const result = await createUser({
+      await createUser({
         variables: {
           createUserInput: { ...data },
         },
       });
-      console.log(result);
       alert("회원가입에 성공하였습니다.");
       router.push("/main");
     } catch (error) {

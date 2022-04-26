@@ -33,9 +33,6 @@ export default function ProductList() {
     });
   };
 
-  console.log(data);
-  console.log(dataUsedItemsBest);
-
   return (
     <ProductListUI
       data={data}

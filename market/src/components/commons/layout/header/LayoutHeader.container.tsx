@@ -11,7 +11,6 @@ export default function LayoutHeader() {
   const router = useRouter();
   const { moveToPage } = useMoveToPage();
 
-  console.log(accessToken);
   const onClickLogout = () => {
     try {
       localStorage.removeItem("accessToken");

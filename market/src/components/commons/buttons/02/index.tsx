@@ -16,13 +16,18 @@ const Button = styled.button`
   border: none;
   cursor: pointer;
   transition: all 0.3s;
+  background: ${(props) => (props.lightColor ? "#fcd91f" : "#bdbdbd")};
+  color: #000000;
 
   &:hover {
-    background: #f5da4f;
-    color: #000000;
+    background: #fcd91f;
   }
 `;
 
 export default function Button02(props: IProps) {
-  return <Button onClick={props.onClick}>{props.title}</Button>;
+  return (
+    <Button onClick={props.onClick} lightColor={props.lightColor}>
+      {props.title}
+    </Button>
+  );
 }

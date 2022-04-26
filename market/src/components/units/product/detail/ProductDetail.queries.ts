@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 // 상품 정보 받아오기 query
-export const FETCH_USEDITEM = gql`
+export const FETCH_USED_ITEM = gql`
   query fetchUseditem($useditemId: ID!) {
     fetchUseditem(useditemId: $useditemId) {
       _id
@@ -21,6 +21,8 @@ export const FETCH_USEDITEM = gql`
         lng
       }
       seller {
+        _id
+        email
         name
         picture
       }
