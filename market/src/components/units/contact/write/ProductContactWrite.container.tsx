@@ -15,6 +15,7 @@ export default function ProductContactWrite() {
   const router = useRouter();
   const [createUseditemQuestion] = useMutation(CREATE_USED_ITEM_QUESTION);
 
+  // 문의하기
   const onClickSubmit = async (data) => {
     try {
       await createUseditemQuestion({

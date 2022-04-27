@@ -22,7 +22,7 @@ export default function BoardCommentList() {
     if (!data) return;
 
     fetchMore({
-      variables: { page: Math.ceil(data?.fetchBoardComments.length / 10) },
+      variables: { page: Math.ceil(data?.fetchBoardComments.length / 10) + 1 },
       updateQuery: (prev, { fetchMoreResult }) => {
         if (!fetchMoreResult.fetchBoardComments)
           return { fetchBoardComments: [...prev.fetchBoardComments] };

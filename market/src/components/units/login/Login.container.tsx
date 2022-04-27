@@ -42,7 +42,7 @@ export default function UserLogin() {
           ...data,
         },
       });
-      const accessToken = result.data.loginUserExample.accessToken;
+      const accessToken = result.data.loginUser.accessToken;
       setAccessToken(accessToken);
 
       // 유저정보 받아오기
@@ -56,8 +56,6 @@ export default function UserLogin() {
       });
       const userInfo = resultUserInfo.data.fetchUserLoggedIn;
       setUserInfo(userInfo);
-      // 문자열로 변환해서 로컬스토리지에 넣기
-      localStorage.setItem("userInfo", JSON.stringify(userInfo));
 
       alert("로그인에 성공하였습니다.");
       router.push("/main");

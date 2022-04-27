@@ -31,7 +31,7 @@ export default function LayoutHeaderUI(props) {
         ) : (
           <S.Login onClick={props.moveToPage("/login")}>로그인</S.Login>
         )}
-        {props.userInfo.email && (
+        {props.userInfo?.email && (
           <S.UserInfo>{props.userInfo?.email}</S.UserInfo>
         )}
       </S.Wrapper>

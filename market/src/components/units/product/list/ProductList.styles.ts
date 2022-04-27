@@ -24,6 +24,7 @@ export const BestProduct = styled.div`
   background: #ffffff;
   border-radius: 10px;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 
   & > h3 {
     width: 100%;
@@ -109,6 +110,7 @@ export const ProductsWrapper = styled.div`
   align-items: center;
   border-top: 3px solid #f6f4f4;
   padding: 1.5rem 1rem;
+  cursor: pointer;
 `;
 
 export const ImgWrapper = styled.div`
@@ -147,4 +149,48 @@ export const ButtonWrapper = styled.div`
   justify-content: flex-end;
   align-items: center;
   padding: 2rem 1rem;
+`;
+
+export const TodayViewWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: 10px;
+  padding: 10px;
+  border: 1px solid #bdbdbd;
+  height: 800px;
+  overflow: auto;
+`;
+
+export const TodayProductWrapper = styled.div`
+  padding: 10px;
+  border: 1px solid #bdbdbd;
+  margin-bottom: 10px;
+  cursor: pointer;
+`;
+
+export const TodayImgWrapper = styled.div`
+  width: 100px;
+  height: 100px;
+
+  & > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  & > span {
+    font-size: 0.8rem;
+  }
+`;
+
+export const ListWrapper = styled.div`
+  width: 100%;
+`;
+export const BodyWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
 `;

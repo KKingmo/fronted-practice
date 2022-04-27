@@ -1,9 +1,12 @@
-import InfiniteScroll from "react-infinite-scroller";
+import ProductContactListUIItem from "./ProductContactList.presenterItem";
+import { v4 as uuidv4 } from "uuid";
 
 export default function ProductContactListUI(props) {
   return (
-    <InfiniteScroll pageStart={0} loadMore={props.onLoadMore} hasMore={true}>
-      {props.data?.map((el) => <div key={el._id} el={el} />) || <div></div>}
-    </InfiniteScroll>
+    <>
+      {props.data?.map((el) => (
+        <ProductContactListUIItem key={uuidv4()} el={el} />
+      ))}
+    </>
   );
 }

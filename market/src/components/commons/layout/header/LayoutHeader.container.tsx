@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import { useMoveToPage } from "../../hooks/useMoveToPage";
 import { useRecoilState } from "recoil";
 import { accessTokenState, userInfoState } from "../../../../commons/store";
+import { LOGOUT_USER } from "./LayoutHeader.queries";
+import { useMutation } from "@apollo/client";
 
 export default function LayoutHeader() {
   // 유저정보 받아오기
@@ -10,11 +12,11 @@ export default function LayoutHeader() {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
   const router = useRouter();
   const { moveToPage } = useMoveToPage();
+  const [logoutUser] = useMutation(LOGOUT_USER);
 
   const onClickLogout = () => {
     try {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("userInfo");
+      logoutUser();
       setAccessToken("");
       setUserInfo({
         email: "",

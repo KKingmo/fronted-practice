@@ -82,6 +82,11 @@ export default function ProductDetailUI(props) {
             title="삭제하기"
             onClick={props.onClickDelete(props.data?._id)}
           />
+          <Button02
+            title="찜하기"
+            lightColor={true}
+            onClick={props.onClickPick}
+          />
         </S.ButtonWrapper>
       )}
 
@@ -89,6 +94,11 @@ export default function ProductDetailUI(props) {
         <S.ButtonWrapper>
           <Button02 title="목록으로" onClick={moveToPage(`/shop`)} />
           <Button02 title="구매하기" lightColor={true} />
+          <Button02
+            title="찜하기"
+            lightColor={true}
+            onClick={props.onClickPick}
+          />
         </S.ButtonWrapper>
       )}
     </S.Wrapper>

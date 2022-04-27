@@ -1,12 +1,17 @@
 import ProductDetailUI from "./ProductDetail.presenter";
 import { useRouter } from "next/router";
 import { useQuery, useMutation } from "@apollo/client";
-import { FETCH_USED_ITEM, DELETE_USED_ITEM } from "./ProductDetail.queries";
+import {
+  FETCH_USED_ITEM,
+  DELETE_USED_ITEM,
+  TOGGLE_USEDITEM_PICK,
+} from "./ProductDetail.queries";
 
 export default function ProductDetail() {
   const router = useRouter();
   const [deleteUseditem] = useMutation(DELETE_USED_ITEM);
-  const { data } = useQuery(FETCH_USED_ITEM, {
+  const [toggleUsedItemPick] = useMutation(TOGGLE_USEDITEM_PICK);
+  const { data, refetch } = useQuery(FETCH_USED_ITEM, {
     variables: { useditemId: router.query.productId },
   });
 
@@ -28,7 +33,24 @@ export default function ProductDetail() {
     }
   };
 
+  // 찜하기
+  const onClickPick = async () => {
+    try {
+      await toggleUsedItemPick({
+        variables: { useditemId: String(router.query.productId) },
+      });
+      refetch();
+      alert("이 상품을 찜 했어요!");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   return (
-    <ProductDetailUI data={data?.fetchUseditem} onClickDelete={onClickDelete} />
+    <ProductDetailUI
+      data={data?.fetchUseditem}
+      onClickDelete={onClickDelete}
+      onClickPick={onClickPick}
+    />
   );
 }
