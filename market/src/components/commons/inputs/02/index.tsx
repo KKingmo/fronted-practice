@@ -27,13 +27,14 @@ interface IProps {
   register: UseFormRegisterReturn;
 }
 
-export default function Input01(props: IProps) {
+export default function Input02(props: IProps) {
   return (
     <Input
       type={props.type}
       {...props.register}
       placeholder={props.placeholder}
       defaultValue={props.defaultValue || ""}
+      onChange={props.onChange}
       onKeyUp={props.onKeyUp}
     />
   );

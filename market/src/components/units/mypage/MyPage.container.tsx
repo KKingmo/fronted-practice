@@ -7,8 +7,9 @@ import { getToday } from "../../../commons/libraries/utils";
 export default function MyPage() {
   const router = useRouter();
   const { data } = useQuery(FETCH_USEDITEMS_I_PICKED, {
-    variables: { search: "" },
+    variables: { search: "", page: 1 },
   });
+  console.log(data);
 
   // 상품클릭
   const onClickPickedItem = (event) => {

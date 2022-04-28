@@ -15,3 +15,24 @@ export const ReactQuillWrapper = styled.div`
     display: none;
   }
 `;
+
+export const HashTag = styled.div`
+  background: #017045;
+  color: #fcd91f;
+  border-radius: 1rem;
+  margin-bottom: 0.875rem;
+  margin-left: 0.875rem;
+  font-weight: 500;
+  align-items: center;
+  display: inline-block;
+  padding: 2px 5px;
+  cursor: pointer;
+
+  &:hover {
+    background: #ff2900;
+  }
+`;
+
+export const DeleteTag = styled.button`
+  display: none;
+`;

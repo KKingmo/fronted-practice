@@ -44,7 +44,7 @@ export const AddressHead = styled.div`
   padding: 10px 0;
 `;
 
-export const SearchAddress = styled.div`
+export const SearchAddress = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;

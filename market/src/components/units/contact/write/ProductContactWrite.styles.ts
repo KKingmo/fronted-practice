@@ -57,5 +57,16 @@ export const ContentsBottomButton = styled.button`
   color: #ffffff;
   font-size: 16px;
   text-align: center;
+  border: none;
+  cursor: pointer;
+`;
+
+export const CancelButton = styled.button`
+  padding: 14px 26px;
+  background: #bdbdbd;
+  color: #ffffff;
+  font-size: 16px;
+  text-align: center;
+  border: none;
   cursor: pointer;
 `;

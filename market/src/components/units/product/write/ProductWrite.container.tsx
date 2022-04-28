@@ -26,6 +26,7 @@ export default function ProductWrite(props) {
   const router = useRouter();
   const [createUsedItem] = useMutation(CREATE_USED_ITEM);
   const [updateUsedItem] = useMutation(UPDATE_USED_ITEM);
+  const [hashArr, setHashArr] = useState([]);
 
   const {
     register,
@@ -59,7 +60,7 @@ export default function ProductWrite(props) {
             remarks: data.remarks,
             contents: data.contents,
             price: parseInt(data.price),
-            tags: data.tags,
+            tags: hashArr,
             images: imageUrls,
             useditemAddress: {
               zipcode: data.zipcode,
@@ -85,7 +86,7 @@ export default function ProductWrite(props) {
       remarks: data.remarks ? data.remarks : props.data?.remarks,
       contents: data.contents ? data.contents : props.data?.contents,
       price: data.price ? parseInt(data.price) : parseInt(props.data?.price),
-      tags: data.tags ? data.tags : props.data?.tags,
+      tags: hashArr,
       images: imageUrls,
       useditemAddress: {
         zipcode: data.zipcode
@@ -128,11 +129,32 @@ export default function ProductWrite(props) {
     setImageUrls(newFileUrls);
   };
 
+  // 수정 진입시 초기값 설정
   useEffect(() => {
+    // 상품설명
+    reset({ contents: props.data?.contents });
+    // 태그
+    if (props.data?.tags?.length) {
+      setHashArr([...props.data?.tags]);
+    }
+    // 이미지
     if (props.data?.images?.length) {
       setImageUrls([...props.data?.images]);
     }
   }, [props.data]);
+
+  // 해쉬태그
+  const onKeyUpHash = (event) => {
+    if (event.keyCode === 32 && event.target.value !== " ") {
+      setHashArr([...hashArr, "#" + event.target.value]);
+      event.target.value = "";
+    }
+  };
+
+  // 해쉬태그 삭제
+  const onClickDeleteTag = (tag) => () => {
+    setHashArr(hashArr.filter((el) => el !== `${tag}`));
+  };
 
   return (
     <ProductWriteUI
@@ -148,7 +170,9 @@ export default function ProductWrite(props) {
       onChangeContents={onChangeContents}
       setValue={setValue}
       getValues={getValues}
-      reset={reset}
+      onKeyUpHash={onKeyUpHash}
+      onClickDeleteTag={onClickDeleteTag}
+      hashArr={hashArr}
     />
   );
 }

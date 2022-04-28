@@ -11,7 +11,7 @@ export default function ProductListUI(props) {
       <S.BestWrapper>
         {props.dataUsedItemsBest?.fetchUseditemsOfTheBest.map((el) => (
           <S.BestProduct
-            key={`b${el._id}`}
+            key={uuidv4()}
             id={el._id}
             onClick={props.onClickProduct(el)}
           >
@@ -67,7 +67,7 @@ export default function ProductListUI(props) {
             >
               {props.data?.fetchUseditems.map((el) => (
                 <S.ProductsWrapper
-                  key={el._id}
+                  key={uuidv4()}
                   id={el._id}
                   onClick={props.onClickProduct(el)}
                 >
@@ -86,8 +86,8 @@ export default function ProductListUI(props) {
                     <div>{el.name}</div>
                     <div>{el.remarks}</div>
                     <div>
-                      {el.tags?.map((e, i) => (
-                        <span key={`t${i}a${el._id}g${e}`}>#{e} </span>
+                      {el.tags?.map((e) => (
+                        <span key={uuidv4()}>{e} </span>
                       ))}
                     </div>
                     <S.SellerWrapper>

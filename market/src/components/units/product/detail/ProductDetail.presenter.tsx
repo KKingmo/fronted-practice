@@ -1,16 +1,14 @@
-import { getDate } from "../../../../commons/libraries/utils";
+import { getDate, getPrice } from "../../../../commons/libraries/utils";
 import * as S from "./ProductDetail.styles";
 import Slider01 from "../../../commons/sliders/01";
 import DOMPurify from "dompurify";
 import KakaoMap02 from "../../../commons/kakaoMaps/02";
-import { useRecoilState } from "recoil";
-import { userInfoState } from "../../../../commons/store";
+import { v4 as uuidv4 } from "uuid";
 import Button02 from "../../../commons/buttons/02";
 import { useMoveToPage } from "../../../commons/hooks/useMoveToPage";
 import { useRouter } from "next/router";
 
 export default function ProductDetailUI(props) {
-  const [userInfo] = useRecoilState(userInfoState);
   const { moveToPage } = useMoveToPage();
   const router = useRouter();
 
@@ -60,7 +58,7 @@ export default function ProductDetailUI(props) {
 
       <S.TagsWrapper>
         {props.data?.tags?.map((e, i) => (
-          <span key={`t${i}a${e}g`}>#{e} </span>
+          <span key={uuidv4()}>{e} </span>
         ))}
       </S.TagsWrapper>
 
@@ -70,7 +68,7 @@ export default function ProductDetailUI(props) {
           tradeLng={props.data?.useditemAddress?.lng}
         />
       </S.MapWrapper>
-      {userInfo._id === props.data?.seller._id && (
+      {props.userData?.fetchUserLoggedIn?._id === props.data?.seller._id && (
         <S.ButtonWrapper>
           <Button02 title="취소하기" onClick={moveToPage(`/shop`)} />
           <Button02
@@ -90,10 +88,14 @@ export default function ProductDetailUI(props) {
         </S.ButtonWrapper>
       )}
 
-      {userInfo._id !== props.data?.seller._id && (
+      {props.userData?.fetchUserLoggedIn?._id !== props.data?.seller._id && (
         <S.ButtonWrapper>
           <Button02 title="목록으로" onClick={moveToPage(`/shop`)} />
-          <Button02 title="구매하기" lightColor={true} />
+          <Button02
+            title="구매하기"
+            lightColor={true}
+            onClick={props.onClickBuy}
+          />
           <Button02
             title="찜하기"
             lightColor={true}

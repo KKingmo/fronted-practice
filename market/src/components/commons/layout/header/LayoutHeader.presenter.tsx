@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { NAVIGATION_MENUS } from "../Menu";
+import { v4 as uuidv4 } from "uuid";
 import * as S from "./LayoutHeader.styles";
 
 export default function LayoutHeaderUI(props) {
@@ -13,7 +14,7 @@ export default function LayoutHeaderUI(props) {
         />
         <S.Navigation>
           {NAVIGATION_MENUS.map((el) => (
-            <li key={el.name}>
+            <li key={uuidv4()}>
               <Link href={{ pathname: el.url }} passHref>
                 <span
                   className={

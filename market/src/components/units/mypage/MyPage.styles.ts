@@ -21,6 +21,8 @@ export const PickedWrapper = styled.div`
   align-items: center;
   flex-wrap: wrap;
   width: 100%;
+  height: 800px;
+  overflow: auto;
 `;
 
 export const PickedItem = styled.div`

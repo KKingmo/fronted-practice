@@ -6,15 +6,10 @@ import * as S from "./ProductWrite.styles";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
 import KakaoMap01 from "../../../commons/kakaoMaps/01";
-import { useEffect } from "react";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 export default function ProductWriteUI(props) {
-  useEffect(() => {
-    props.reset({ contents: props.data?.contents });
-  }, [props.data]);
-
   return (
     <S.Form
       onSubmit={props.handleSubmit(
@@ -61,12 +56,21 @@ export default function ProductWriteUI(props) {
       <div>{props.formState.errors.price?.message}</div>
 
       <h3>태그입력</h3>
+      <div style={{ display: "flex" }}>
+        {props.hashArr.map((el, idx) => (
+          <S.HashTag key={uuidv4()} onClick={props.onClickDeleteTag(el)}>
+            {el}
+          </S.HashTag>
+        ))}
+      </div>
       <Input01
         type="text"
-        placeholder="#태그 #태그 #태그"
+        placeholder="태그를 입력하고 스페이스바를 눌러주세요, 태그를 클릭하면
+        삭제됩니다."
         register={props.register("tags")}
-        defaultValue={props.data?.tags}
+        onKeyUp={props.onKeyUpHash}
       />
+
       <div>{props.formState.errors.tags?.message}</div>
 
       <KakaoMap01

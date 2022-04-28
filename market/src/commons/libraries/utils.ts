@@ -16,6 +16,6 @@ export const getToday = () => {
   return `${yyyy}-${mm}-${dd}`;
 };
 
-export const getPrice = (price: number) => {
+export const getPrice = (price) => {
   return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원";
 };
