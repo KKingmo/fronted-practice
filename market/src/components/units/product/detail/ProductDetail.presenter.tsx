@@ -1,4 +1,4 @@
-import { getDate, getPrice } from "../../../../commons/libraries/utils";
+import { getDate } from "../../../../commons/libraries/utils";
 import * as S from "./ProductDetail.styles";
 import Slider01 from "../../../commons/sliders/01";
 import DOMPurify from "dompurify";
