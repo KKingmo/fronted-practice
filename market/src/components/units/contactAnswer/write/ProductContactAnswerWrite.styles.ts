@@ -1,12 +1,11 @@
 import styled from "@emotion/styled";
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.form`
   display: flex;
   flex-direction: column;
   width: 100%;
   margin: 0px auto;
-  padding-top: 40px;
 `;
 
 export const Title = styled.div`
@@ -53,8 +52,8 @@ export const ContentsBottomLength = styled.div`
 `;
 export const ContentsBottomButton = styled.button`
   padding: 14px 26px;
-  background: #000000;
-  color: #ffffff;
+  background: #ffd600;
+  color: #000000;
   font-size: 16px;
   text-align: center;
   border: none;

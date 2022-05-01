@@ -16,7 +16,7 @@ export default function ProductListUI(props) {
             onClick={props.onClickProduct(el)}
           >
             <S.BestImgWrapper>
-              {el.images[0] ? (
+              {el.images.filter((e) => e !== "")[0] ? (
                 <img
                   src={`https://storage.googleapis.com/${el.images[0]}`}
                   alt="상품이미지"

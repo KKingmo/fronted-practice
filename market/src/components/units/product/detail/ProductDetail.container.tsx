@@ -18,7 +18,7 @@ export default function ProductDetail() {
   );
   const { data: userData } = useQuery(FETCH_USER_LOGGED_IN);
   const { data, refetch } = useQuery(FETCH_USED_ITEM, {
-    variables: { useditemId: router.query.productId },
+    variables: { useditemId: String(router.query.productId) },
   });
   console.log(data);
 

@@ -20,3 +20,18 @@ export const DELETE_USED_ITEM_QUESTION = gql`
     deleteUseditemQuestion(useditemQuestionId: $useditemQuestionId)
   }
 `;
+
+// 유저정보 가져오기
+export const FETCH_USER_LOGGED_IN = gql`
+  query fetchUserLoggedIn {
+    fetchUserLoggedIn {
+      name
+      email
+      _id
+      userPoint {
+        _id
+        amount
+      }
+    }
+  }
+`;

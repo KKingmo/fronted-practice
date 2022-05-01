@@ -45,7 +45,7 @@ export default function KakaoMap01(props) {
         };
         // 지도 Dom 선택해서 지도 생성
         const map = new window.kakao.maps.Map(container, options);
-
+        if (!new window.kakao.maps.services.Geocoder().addressSearch) return;
         // 주소-좌표 변환 객체를 생성합니다
         const geocoder = new window.kakao.maps.services.Geocoder();
 

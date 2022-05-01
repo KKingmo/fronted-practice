@@ -47,11 +47,12 @@ export const UserIcon = styled(AccountCircleIcon)`
     font-size: 40px;
   }
 `;
-
-export const CommentWrapper = styled(FlexColumn)`
-  padding-bottom: 20px;
-  border-bottom: 1px solid #bdbdbd;
+//
+export const CommentWrapper1 = styled(FlexColumn)`
+  width: 100%;
 `;
+
+export const CommentWrapper2 = styled(FlexRow)``;
 
 export const CommentContainer = styled(FlexRow)`
   justify-content: flex-start;
@@ -59,7 +60,7 @@ export const CommentContainer = styled(FlexRow)`
   padding: 40px 0px 20px 0px;
   width: 100%;
 `;
-
+//
 export const CommentLeft = styled.div`
   padding-right: 16.5px;
 `;
@@ -92,18 +93,18 @@ export const Writer = styled.div`
 `;
 
 export const CommentRightHeadRight = styled(FlexRow)``;
-
+//
 export const AnswerWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   width: 100%;
   padding-top: 1.5rem;
 `;
-
+//
 export const AnswerIconWrapper = styled.div`
   padding-left: 2.5rem;
 `;
-
+//
 export const AnswerIcon = styled(SubdirectoryArrowRightIcon)`
   && {
     color: #000000;

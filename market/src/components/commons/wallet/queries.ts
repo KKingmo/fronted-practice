@@ -213,7 +213,7 @@ export const CREATE_USED_ITEM_QUESTION_ANSWER = gql`
 `;
 
 // 상품 문의 답변 query
-export const FETCH_USED_ITEM_QUESTION_ANSWER = gql`
+export const FETCH_USED_ITEM_QUESTION_ANSWERS = gql`
   query fetchUseditemQuestionAnswers($useditemQuestionId: ID!) {
     fetchUseditemQuestionAnswers(useditemQuestionId: $useditemQuestionId) {
       _id
