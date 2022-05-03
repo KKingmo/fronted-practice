@@ -9,7 +9,7 @@ const Container = styled.div`
 `;
 
 const Body = styled.div`
-  width: 996px;
+  width: 1200px;
   height: auto;
   margin: 0 auto;
 `;

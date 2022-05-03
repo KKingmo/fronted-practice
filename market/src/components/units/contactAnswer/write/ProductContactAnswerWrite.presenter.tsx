@@ -11,7 +11,7 @@ export default function ProductContactAnswerWriteUI(props) {
         <S.ContentsTextarea
           {...props.register("contents")}
           maxLength={100}
-          defaultValue={props.isEdit ? props.el?.contents : ""}
+          defaultValue={props.isEdit ? props.a?.contents : ""}
           placeholder="답글을 등록해주세요."
         ></S.ContentsTextarea>
         <S.ContentsBottom>

@@ -160,28 +160,35 @@ export const TodayViewWrapper = styled.div`
   padding: 10px;
   border: 1px solid #bdbdbd;
   height: 800px;
-  overflow: auto;
+  overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
 export const TodayProductWrapper = styled.div`
+  width: 100%;
   padding: 10px;
   border: 1px solid #bdbdbd;
   margin-bottom: 10px;
   cursor: pointer;
+
+  & > span {
+    display: inline-block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.8rem;
+  }
 `;
 
 export const TodayImgWrapper = styled.div`
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  height: auto;
 
   & > img {
     width: 100%;
-    height: 100%;
+    height: 100px;
     object-fit: contain;
-  }
-
-  & > span {
-    font-size: 0.8rem;
   }
 `;
 

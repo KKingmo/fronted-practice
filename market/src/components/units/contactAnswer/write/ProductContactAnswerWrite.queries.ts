@@ -22,6 +22,7 @@ export const FETCH_USED_ITEM_QUESTION_ANSWERS = gql`
       _id
       contents
       user {
+        _id
         name
       }
       createdAt

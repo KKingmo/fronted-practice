@@ -81,6 +81,7 @@ export default function ProductContactAnswerWrite(props) {
       setIsAnswer={props.setIsAnswer}
       isEdit={props.isEdit}
       el={props.el}
+      a={props.a}
     />
   );
 }

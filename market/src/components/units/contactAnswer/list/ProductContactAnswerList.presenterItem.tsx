@@ -83,6 +83,7 @@ export default function ProductContactAnswerListUIItem(props) {
               setIsAnswer={setIsAnswer}
               isEdit={isEdit}
               el={props.el2}
+              a={props.el}
             />
           )}
         </S.CommentWrapper1>

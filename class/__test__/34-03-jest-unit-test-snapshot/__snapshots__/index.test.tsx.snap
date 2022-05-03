@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`컴포넌트가 기존이랑 바뀐게 없는지 비교해보자 - 스냅샷 테스트 1`] = `
+<div>
+  <div>
+    <div>
+      철수는 14살 입니다.
+    </div>
+    철수의 취미 입력하기 : 
+    <input
+      type="text"
+    />
+    <button>
+      철수랑 놀러가기
+    </button>
+  </div>
+</div>
+`;
