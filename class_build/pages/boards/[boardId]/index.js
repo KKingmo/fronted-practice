@@ -47,7 +47,7 @@ export const getServerSideProps = async (context) => {
       myboardData: {
         title: result.fetchBoard.title,
         contents: result.fetchBoard.contents,
-        imagesL: result.fetchBoard.imagesL,
+        images: result.fetchBoard.images,
       },
     },
   };
